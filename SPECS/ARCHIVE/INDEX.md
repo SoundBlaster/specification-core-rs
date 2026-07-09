@@ -22,3 +22,4 @@
 | 2026-07-10 | P0-T1 | Archived Project Charter and Architecture Baseline (PASS) |
 | 2026-07-10 | P0-T1 | Archived REVIEW_p0_t1_project_charter report (FOLLOW-UP skipped) |
 | 2026-07-10 | P0-T2 | Archived Contribution and Agent Governance (PASS) |
+| 2026-07-10 | P0-T2 | Archived REVIEW_p0_t2_governance report (FOLLOW-UP skipped) |
