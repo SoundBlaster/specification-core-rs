@@ -1,17 +1,17 @@
-# Next Task: P0-T2 — Contribution and Agent Governance
+# Next Task: P0-T3 — Documentation System and DocC Migration Plan
 
 **Priority:** P0
 **Phase:** Project Foundations
 **Effort:** Medium
 **Dependencies:** P0-T1
-**Status:** Selected
+**Status:** Candidate for SELECT
 
 ## Description
 
-Define the operating contract for AI agents and human contributors before
-implementation begins, including contributor, security, licensing, and review
-expectations.
+Establish the rustdoc and mdBook information architecture, the documentation
+style guide, and a traceable conversion plan for the Swift DocC corpus.
 
 ## Next Step
 
-Create the implementation-ready PRD during PLAN.
+Start `FLOW.md` with BRANCH, then confirm P0-T3 during SELECT and generate its
+implementation-ready PRD during PLAN.
