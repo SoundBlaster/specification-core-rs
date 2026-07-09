@@ -14,7 +14,7 @@ take precedence over source-level parity.
 - **Priority:** P0
 - **Dependencies:** None
 - **Parallelizable:** no
-- **Status:** INPROGRESS
+- **Status:** Complete
 - **Acceptance Criteria:**
   - Project goals, audiences, use cases, and non-goals are documented
   - Idiomatic Rust design is explicitly prioritized over source-level Swift API parity

@@ -1,11 +1,12 @@
 # Tasks Archive
 
-**Last Updated:** YYYY-MM-DD
+**Last Updated:** 2026-07-10
 
 ## Archived Tasks
 
 | Task ID | Folder | Archived | Verdict |
 |---------|--------|----------|---------|
+| P0-T1 | [P0-T1_Project_Charter_and_Architecture_Baseline/](P0-T1_Project_Charter_and_Architecture_Baseline/) | 2026-07-10 | PASS |
 
 ## Historical Artifacts
 
@@ -17,3 +18,4 @@
 
 | Date | Task ID | Action |
 |------|---------|--------|
+| 2026-07-10 | P0-T1 | Archived Project Charter and Architecture Baseline (PASS) |
