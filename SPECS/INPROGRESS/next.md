@@ -4,7 +4,7 @@
 **Phase:** Project Foundations
 **Effort:** Medium
 **Dependencies:** None
-**Status:** Candidate for SELECT
+**Status:** Selected
 
 ## Description
 
@@ -14,5 +14,4 @@ lightweight ADR process before implementation choices become implicit.
 
 ## Next Step
 
-Start `FLOW.md` with BRANCH, then confirm P0-T1 during SELECT and generate its
-implementation-ready PRD during PLAN.
+Create the implementation-ready PRD during PLAN.
