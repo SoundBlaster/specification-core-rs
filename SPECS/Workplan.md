@@ -66,7 +66,7 @@ take precedence over source-level parity.
 - **Priority:** P0
 - **Dependencies:** P0-T1, P0-T3
 - **Parallelizable:** no
-- **Status:** Not Started
+- **Status:** INPROGRESS
 - **Acceptance Criteria:**
   - Actual Swift public API and test coverage are inventoried independently of README claims
   - Swift build/test baseline and known failures are recorded with toolchain context
