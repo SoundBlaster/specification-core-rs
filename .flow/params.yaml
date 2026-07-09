@@ -1,0 +1,23 @@
+# Project-specific Flow configuration.
+# Flow-managed files live under SPECS/; this file is preserved across updates.
+
+project:
+  name: specification-core-rs
+  description: Idiomatic Rust implementation of the Specification Pattern
+  language: Rust
+  package_manager: cargo
+  default_branch: main
+
+verify:
+  tests: cargo test --workspace --all-features
+  lint: cargo clippy --workspace --all-targets --all-features -- -D warnings
+  format: cargo fmt --all --check
+
+task_system:
+  kind: file
+  project_key: SCR
+  task_url_template: "SPECS/Workplan.md#{task_id}-{task_name_slug}"
+
+structure:
+  source: crates/specification-core/src/
+  tests: crates/specification-core/tests/
