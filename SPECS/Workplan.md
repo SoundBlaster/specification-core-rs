@@ -40,7 +40,7 @@ take precedence over source-level parity.
 - **Priority:** P0
 - **Dependencies:** P0-T1
 - **Parallelizable:** yes
-- **Status:** INPROGRESS
+- **Status:** Complete
 - **Acceptance Criteria:**
   - rustdoc and mdBook responsibilities are documented without API-reference duplication
   - Documentation style guide defines language, examples, links, and required sections
