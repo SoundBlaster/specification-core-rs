@@ -31,3 +31,4 @@
 | 2026-07-10 | P0-T4 | Archived Toolchain, Quality, and Release Policy (PASS) |
 | 2026-07-10 | P0-T4 | Archived REVIEW_p0_t4_toolchain_policy report (FOLLOW-UP skipped) |
 | 2026-07-10 | P0-T5 | Archived Swift Reference Audit and Porting Matrix (PASS WITH REFERENCE BASELINE FAILURE RECORDED) |
+| 2026-07-10 | P0-T5 | Archived REVIEW_p0_t5_swift_audit report (FOLLOW-UP skipped) |
