@@ -1,17 +1,17 @@
-# Next Task: P0-T5 — Swift Reference Audit and Porting Matrix
+# Next Task: P1-T1 — Bootstrap Rust Workspace
 
 **Priority:** P0
-**Phase:** Project Foundations
+**Phase:** Foundation
 **Effort:** Medium
-**Dependencies:** P0-T1, P0-T3
-**Status:** Selected
+**Dependencies:** P0-T2, P0-T3, P0-T4
+**Status:** Candidate for SELECT
 
 ## Description
 
-Audit the actual Swift implementation, tests, and documentation, then define
-the behavioral porting matrix that P1-T2 will use rather than relying on README
-claims or assumed API parity.
+Create the Cargo workspace, core crate, repository tooling, CI quality gates,
+and documentation checks required before implementing the public API.
 
 ## Next Step
 
-Create the implementation-ready PRD during PLAN.
+Start `FLOW.md` with BRANCH, then confirm P1-T1 during SELECT and generate its
+implementation-ready PRD during PLAN.

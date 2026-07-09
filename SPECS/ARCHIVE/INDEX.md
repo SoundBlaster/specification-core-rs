@@ -10,6 +10,7 @@
 | P0-T2 | [P0-T2_Contribution_and_Agent_Governance/](P0-T2_Contribution_and_Agent_Governance/) | 2026-07-10 | PASS |
 | P0-T3 | [P0-T3_Documentation_System_and_DocC_Migration_Plan/](P0-T3_Documentation_System_and_DocC_Migration_Plan/) | 2026-07-10 | PASS WITH DEFERRED TOOL GATE |
 | P0-T4 | [P0-T4_Toolchain_Quality_and_Release_Policy/](P0-T4_Toolchain_Quality_and_Release_Policy/) | 2026-07-10 | PASS |
+| P0-T5 | [P0-T5_Swift_Reference_Audit_and_Porting_Matrix/](P0-T5_Swift_Reference_Audit_and_Porting_Matrix/) | 2026-07-10 | PASS WITH REFERENCE BASELINE FAILURE RECORDED |
 
 ## Historical Artifacts
 
@@ -29,3 +30,4 @@
 | 2026-07-10 | P0-T3 | Archived REVIEW_p0_t3_documentation_system report (FOLLOW-UP skipped) |
 | 2026-07-10 | P0-T4 | Archived Toolchain, Quality, and Release Policy (PASS) |
 | 2026-07-10 | P0-T4 | Archived REVIEW_p0_t4_toolchain_policy report (FOLLOW-UP skipped) |
+| 2026-07-10 | P0-T5 | Archived Swift Reference Audit and Porting Matrix (PASS WITH REFERENCE BASELINE FAILURE RECORDED) |
