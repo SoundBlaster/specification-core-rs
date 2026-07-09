@@ -19,6 +19,7 @@ Flow tasks follow `BRANCH → SELECT → PLAN → EXECUTE → ARCHIVE → REVIEW
 
 - Describe the task, behavior, and validation actually performed.
 - Update documentation and examples together with public behavior changes.
+- Follow the [documentation guide](docs/contributing/documentation.md) for rustdoc, mdBook, and example requirements.
 - Do not combine unrelated refactors, formatting sweeps, or dependency updates.
 - Respond to review findings with a follow-up task when they exceed the current scope.
 

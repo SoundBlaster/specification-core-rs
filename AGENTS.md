@@ -17,6 +17,7 @@
 ## Documentation and Validation
 
 - Write public API documentation, examples, and contributor-facing material in English.
+- Follow [`docs/contributing/documentation.md`](docs/contributing/documentation.md) for rustdoc, mdBook, examples, and Swift DocC migration rules.
 - Update relevant rustdoc, guides, and executable examples with every public behavior change.
 - Run the quality gates configured in `.flow/params.yaml` when they are available; record unavailable gates and their reason in validation reports.
 - Do not claim tests, coverage, platform support, or performance results that were not verified in the current task.
