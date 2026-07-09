@@ -4,7 +4,7 @@
 **Phase:** Project Foundations
 **Effort:** Medium
 **Dependencies:** P0-T1
-**Status:** Candidate for SELECT
+**Status:** Selected
 
 ## Description
 
@@ -13,5 +13,4 @@ style guide, and a traceable conversion plan for the Swift DocC corpus.
 
 ## Next Step
 
-Start `FLOW.md` with BRANCH, then confirm P0-T3 during SELECT and generate its
-implementation-ready PRD during PLAN.
+Create the implementation-ready PRD during PLAN.
