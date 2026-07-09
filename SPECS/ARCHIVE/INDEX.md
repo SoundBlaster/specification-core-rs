@@ -28,3 +28,4 @@
 | 2026-07-10 | P0-T3 | Archived Documentation System and DocC Migration Plan (PASS WITH DEFERRED TOOL GATE) |
 | 2026-07-10 | P0-T3 | Archived REVIEW_p0_t3_documentation_system report (FOLLOW-UP skipped) |
 | 2026-07-10 | P0-T4 | Archived Toolchain, Quality, and Release Policy (PASS) |
+| 2026-07-10 | P0-T4 | Archived REVIEW_p0_t4_toolchain_policy report (FOLLOW-UP skipped) |
