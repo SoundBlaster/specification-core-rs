@@ -43,4 +43,7 @@ Miri component. CI provisions both tools automatically.
 See the [contribution guide](CONTRIBUTING.md), the
 [toolchain and quality policy](docs/engineering/toolchain-quality-release-policy.md),
 the [release checklist](docs/engineering/release-checklist.md), and the
-[mdBook source](docs/src/README.md).
+[published mdBook guide](https://soundblaster.github.io/specification-core-rs/).
+
+API references are available on [docs.rs](https://docs.rs/specification-core/0.1.0/specification_core/)
+and in the [published Pages API](https://soundblaster.github.io/specification-core-rs/api/specification_core/).

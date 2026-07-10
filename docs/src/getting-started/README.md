@@ -1,20 +1,40 @@
 # Getting Started
 
-`specification-core` models a business rule as a synchronous
-`Specification<T>`. Candidates are borrowed, and closures can be used directly
-as rules. The snippets below are mirrored by the crate-root rustdoc doctest;
-mdBook's isolated test harness cannot link a workspace crate directly.
+This chapter takes a small eligibility rule from a closure to a reusable,
+typed decision. The complete static version is also available as
+[`static_composition.rs`](https://github.com/SoundBlaster/specification-core-rs/blob/main/crates/specification-core/examples/static_composition.rs).
+
+Add the core crate to an application:
+
+```toml
+[dependencies]
+specification-core = "0.1"
+```
+
+`Specification<T>` evaluates a borrowed candidate. A closure with the shape
+`Fn(&T) -> bool` implements the trait automatically, so a small rule needs no
+boilerplate type.
 
 ```rust,ignore
 use specification_core::Specification;
 
-let is_adult = |age: &u8| *age >= 18;
-assert!(is_adult.is_satisfied_by(&18));
-assert!(!is_adult.is_satisfied_by(&17));
+struct User {
+    age: u8,
+    verified: bool,
+}
+
+let is_adult = |user: &User| user.age >= 18;
+let is_verified = |user: &User| user.verified;
+let eligible = is_adult.and(is_verified);
+
+let user = User { age: 21, verified: true };
+assert!(eligible.is_satisfied_by(&user));
 ```
 
-Build larger rules with `and`, `or`, and `not`. The operands remain concrete
-types, so composition needs neither a heap allocation nor dynamic dispatch.
+`eligible` is a concrete `And<...>` value. The static composition path does
+not allocate or use dynamic dispatch, and `and`/`or` short-circuit from left to
+right. Rust receives `&user` because evaluation borrows the candidate rather
+than taking ownership of it.
 
 ```rust,ignore
 use specification_core::Specification;
@@ -27,11 +47,21 @@ assert!(working_age.is_satisfied_by(&42));
 assert!(!working_age.is_satisfied_by(&70));
 ```
 
-`And` evaluates its left rule first and skips its right rule after a false
-result. `Or` skips its right rule after a true result. `AllOf` and `AnyOf` add
-the same short-circuit behavior for borrowed homogeneous slices; empty all-of
-is true and empty any-of is false.
+`AllOf` and `AnyOf` apply the same behavior to a borrowed homogeneous slice;
+their empty identities are `true` and `false`, respectively.
 
-Type erasure, decisions, contexts, and built-in time rules are deliberately
-later milestones. The [architecture baseline](../design/architecture.md)
-explains those crate boundaries.
+## Where to go next
+
+- Need heterogeneous or runtime-selected rules? Read [Dynamic and shared
+  specifications](../concepts/README.md#static-and-dynamic-rules).
+- Need a typed outcome instead of `bool`? Read [Decisions and evaluation
+  context](../guides/decisions-context.md).
+- Need network or I/O-backed evaluation? Read [Async
+  Specifications](../guides/async.md).
+- Need to port an existing Swift rule? Read [Swift to
+  Rust](../migration/swift-to-rust.md).
+
+The `rust,ignore` blocks in this book are illustrative because mdBook does not
+link standalone snippets to the workspace. Every complete workflow is backed
+by a Cargo example, integration test, or compiled rustdoc example; links to
+those sources are provided in the relevant chapter.
