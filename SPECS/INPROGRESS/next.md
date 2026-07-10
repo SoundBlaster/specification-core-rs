@@ -4,7 +4,7 @@
 **Phase:** Foundation
 **Effort:** Medium
 **Dependencies:** P1-T1, P0-T5
-**Status:** Candidate
+**Status:** Selected
 
 ## Description
 
@@ -17,5 +17,4 @@ combinators from the approved Swift behavioral porting matrix.
 
 ## Next Step
 
-Select P1-T2 after the P1-T1 pull request has been opened and its GitHub
-Actions results have been inspected.
+Create the implementation-ready PRD during PLAN.
