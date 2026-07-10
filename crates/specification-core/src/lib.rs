@@ -16,7 +16,7 @@
 //! assert!(!eligible.is_satisfied_by(&70));
 //! ```
 
-use std::sync::Arc;
+use std::{collections::BTreeMap, sync::Arc, time::Duration};
 
 /// A deterministic boolean rule over a borrowed candidate.
 ///
@@ -311,14 +311,167 @@ impl<T: ?Sized, Decision> DecisionSpecification<T> for FirstMatch<T, Decision> {
     }
 }
 
+/// Immutable input data for specifications that need counters, flags, time,
+/// and application-specific user data.
+pub struct EvaluationContext<UserData> {
+    user_data: UserData,
+    counters: BTreeMap<String, u64>,
+    flags: BTreeMap<String, bool>,
+    timestamps: BTreeMap<String, Duration>,
+}
+
+impl<UserData> EvaluationContext<UserData> {
+    /// Creates an empty context containing typed `user_data`.
+    pub fn new(user_data: UserData) -> Self {
+        Self {
+            user_data,
+            counters: BTreeMap::new(),
+            flags: BTreeMap::new(),
+            timestamps: BTreeMap::new(),
+        }
+    }
+
+    /// Adds or replaces a counter while constructing the context.
+    pub fn with_counter(mut self, key: impl Into<String>, value: u64) -> Self {
+        self.counters.insert(key.into(), value);
+        self
+    }
+
+    /// Adds or replaces a flag while constructing the context.
+    pub fn with_flag(mut self, key: impl Into<String>, value: bool) -> Self {
+        self.flags.insert(key.into(), value);
+        self
+    }
+
+    /// Adds or replaces a timestamp while constructing the context.
+    pub fn with_timestamp(mut self, key: impl Into<String>, value: Duration) -> Self {
+        self.timestamps.insert(key.into(), value);
+        self
+    }
+
+    /// Returns the typed application data.
+    pub fn user_data(&self) -> &UserData {
+        &self.user_data
+    }
+
+    /// Returns a counter, treating a missing key as zero.
+    pub fn counter(&self, key: &str) -> u64 {
+        self.counters.get(key).copied().unwrap_or_default()
+    }
+
+    /// Returns a flag, treating a missing key as false.
+    pub fn flag(&self, key: &str) -> bool {
+        self.flags.get(key).copied().unwrap_or_default()
+    }
+
+    /// Returns the timestamp stored for `key`, if one exists.
+    pub fn timestamp(&self, key: &str) -> Option<Duration> {
+        self.timestamps.get(key).copied()
+    }
+}
+
+/// A deterministic source of evaluation time.
+pub trait Clock {
+    /// Returns the current time in the clock's chosen monotonic epoch.
+    fn now(&self) -> Duration;
+}
+
+/// A clock fixed at one instant, useful for deterministic evaluation and tests.
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub struct FixedClock(Duration);
+
+impl FixedClock {
+    /// Creates a clock that always returns `now`.
+    pub const fn new(now: Duration) -> Self {
+        Self(now)
+    }
+}
+
+impl Clock for FixedClock {
+    fn now(&self) -> Duration {
+        self.0
+    }
+}
+
+/// A specification satisfied while a named counter remains strictly below a maximum.
+pub struct MaxCount {
+    key: String,
+    maximum_count: u64,
+}
+
+impl MaxCount {
+    /// Creates a counter rule with the strict condition `counter < maximum_count`.
+    pub fn new(key: impl Into<String>, maximum_count: u64) -> Self {
+        Self {
+            key: key.into(),
+            maximum_count,
+        }
+    }
+}
+
+impl<UserData> Specification<EvaluationContext<UserData>> for MaxCount {
+    fn is_satisfied_by(&self, context: &EvaluationContext<UserData>) -> bool {
+        context.counter(&self.key) < self.maximum_count
+    }
+}
+
+/// A specification satisfied when a named context flag is true.
+pub struct Flag {
+    key: String,
+}
+
+impl Flag {
+    /// Creates a rule for a named boolean flag.
+    pub fn new(key: impl Into<String>) -> Self {
+        Self { key: key.into() }
+    }
+}
+
+impl<UserData> Specification<EvaluationContext<UserData>> for Flag {
+    fn is_satisfied_by(&self, context: &EvaluationContext<UserData>) -> bool {
+        context.flag(&self.key)
+    }
+}
+
+/// A specification satisfied after a named timestamp is at least one duration old.
+pub struct Cooldown<ClockType> {
+    key: String,
+    duration: Duration,
+    clock: ClockType,
+}
+
+impl<ClockType> Cooldown<ClockType> {
+    /// Creates a cooldown rule using an explicitly provided clock.
+    pub fn new(key: impl Into<String>, duration: Duration, clock: ClockType) -> Self {
+        Self {
+            key: key.into(),
+            duration,
+            clock,
+        }
+    }
+}
+
+impl<UserData, ClockType> Specification<EvaluationContext<UserData>> for Cooldown<ClockType>
+where
+    ClockType: Clock,
+{
+    fn is_satisfied_by(&self, context: &EvaluationContext<UserData>) -> bool {
+        context
+            .timestamp(&self.key)
+            .is_none_or(|timestamp| self.clock.now().saturating_sub(timestamp) >= self.duration)
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use std::cell::Cell;
     use std::rc::Rc;
+    use std::time::Duration;
 
     use super::{
-        AllOf, Always, AnyOf, BoxedSpecification, DecisionSpecification, FirstMatch, Never,
-        SharedSpecification, Specification,
+        AllOf, Always, AnyOf, BoxedSpecification, Cooldown, DecisionSpecification,
+        EvaluationContext, FirstMatch, FixedClock, Flag, MaxCount, Never, SharedSpecification,
+        Specification,
     };
 
     struct CountingSpecification {
@@ -486,5 +639,59 @@ mod tests {
 
         assert_eq!(decisions.decide(&5), None);
         assert_eq!(decisions.decide_or(&5, &fallback), &fallback);
+    }
+
+    #[test]
+    fn context_preserves_typed_user_data_and_default_values() {
+        let context = EvaluationContext::new("user").with_counter("visits", 3);
+
+        assert_eq!(context.user_data(), &"user");
+        assert_eq!(context.counter("visits"), 3);
+        assert_eq!(context.counter("missing"), 0);
+        assert!(!context.flag("missing"));
+        assert_eq!(context.timestamp("missing"), None);
+    }
+
+    #[test]
+    fn max_count_uses_a_strict_boundary() {
+        let specification = MaxCount::new("attempts", 3);
+
+        assert!(
+            specification.is_satisfied_by(&EvaluationContext::new(()).with_counter("attempts", 2))
+        );
+        assert!(
+            !specification.is_satisfied_by(&EvaluationContext::new(()).with_counter("attempts", 3))
+        );
+        assert!(specification.is_satisfied_by(&EvaluationContext::new(())));
+    }
+
+    #[test]
+    fn flag_requires_a_true_context_value() {
+        let specification = Flag::new("premium");
+
+        assert!(
+            specification.is_satisfied_by(&EvaluationContext::new(()).with_flag("premium", true))
+        );
+        assert!(
+            !specification.is_satisfied_by(&EvaluationContext::new(()).with_flag("premium", false))
+        );
+        assert!(!specification.is_satisfied_by(&EvaluationContext::new(())));
+    }
+
+    #[test]
+    fn cooldown_uses_an_injected_clock_and_inclusive_boundary() {
+        let specification = Cooldown::new(
+            "last_login",
+            Duration::from_secs(60),
+            FixedClock::new(Duration::from_secs(100)),
+        );
+
+        assert!(specification.is_satisfied_by(&EvaluationContext::new(())));
+        assert!(specification.is_satisfied_by(
+            &EvaluationContext::new(()).with_timestamp("last_login", Duration::from_secs(40))
+        ));
+        assert!(!specification.is_satisfied_by(
+            &EvaluationContext::new(()).with_timestamp("last_login", Duration::from_secs(41))
+        ));
     }
 }
