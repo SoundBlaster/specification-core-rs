@@ -72,3 +72,7 @@ the task through the remaining Flow stages.
 Public documentation remains technical English. Update the migration map only
 if the context-provider destination changes; otherwise preserve its explicit
 exclusion of global singleton semantics.
+
+---
+**Archived:** 2026-07-10
+**Verdict:** PASS

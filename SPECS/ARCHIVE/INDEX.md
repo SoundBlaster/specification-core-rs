@@ -15,6 +15,7 @@
 | P1-T2 | [P1-T2_Core_Specification_API/](P1-T2_Core_Specification_API/) | 2026-07-10 | PASS WITH REMOTE CI PENDING |
 | P1-T3 | [P1-T3_Dynamic_Specifications_and_Decisions/](P1-T3_Dynamic_Specifications_and_Decisions/) | 2026-07-10 | PASS WITH REMOTE CI PENDING |
 | P1-T4 | [P1-T4_Evaluation_Context_and_Built_ins/](P1-T4_Evaluation_Context_and_Built_ins/) | 2026-07-10 | PASS WITH REMOTE CI PENDING |
+| P2-T1 | [P2-T1_Concurrency_Contracts/](P2-T1_Concurrency_Contracts/) | 2026-07-10 | PASS |
 
 ## Historical Artifacts
 
@@ -44,3 +45,4 @@
 | 2026-07-10 | P1-T3 | Archived REVIEW_p1_t3_dynamic_decisions report (FOLLOW-UP skipped) |
 | 2026-07-10 | P1-T4 | Archived Evaluation Context and Built-ins (PASS WITH REMOTE CI PENDING) |
 | 2026-07-10 | P1-T4 | Archived REVIEW_p1_t4_context_builtins report (FOLLOW-UP skipped) |
+| 2026-07-10 | P2-T1 | Archived Concurrency Contracts (PASS) |

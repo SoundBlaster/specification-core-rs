@@ -136,7 +136,7 @@ take precedence over source-level parity.
 - **Priority:** P1
 - **Dependencies:** P1-T4
 - **Parallelizable:** no
-- **Status:** INPROGRESS
+- **Status:** Complete
 - **Acceptance Criteria:**
   - Shared APIs expose explicit `Send + Sync` bounds
   - Mutable providers use dependency injection rather than global singletons
