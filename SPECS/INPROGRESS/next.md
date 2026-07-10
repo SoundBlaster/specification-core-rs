@@ -1,18 +1,18 @@
-# Next Task: P0-T1 — Project Charter and Architecture Baseline
+# Next Task: P0-T2 — Contribution and Agent Governance
 
 **Priority:** P0
 **Phase:** Project Foundations
 **Effort:** Medium
-**Dependencies:** None
+**Dependencies:** P0-T1
 **Status:** Candidate for SELECT
 
 ## Description
 
-Turn the accepted product direction into a durable project charter, define
-goals and non-goals, establish initial crate boundaries, and introduce a
-lightweight ADR process before implementation choices become implicit.
+Define the operating contract for AI agents and human contributors before
+implementation begins, including contributor, security, licensing, and review
+expectations.
 
 ## Next Step
 
-Start `FLOW.md` with BRANCH, then confirm P0-T1 during SELECT and generate its
+Start `FLOW.md` with BRANCH, then confirm P0-T2 during SELECT and generate its
 implementation-ready PRD during PLAN.
