@@ -4,7 +4,7 @@
 **Phase:** Compatibility and Release
 **Effort:** High
 **Dependencies:** P1-T4
-**Status:** Candidate
+**Status:** INPROGRESS
 
 ## Description
 
@@ -22,5 +22,5 @@ Define behavioral fixtures shared conceptually with the Swift implementation.
 
 ## Next Step
 
-Phase 2 is complete. Select P3-T1 to define portable composition, first-match,
-context, and async behavior fixtures before documentation/benchmark completion.
+P3-T1 is active. Define portable composition, first-match, and context
+fixtures before documentation and benchmark completion.
