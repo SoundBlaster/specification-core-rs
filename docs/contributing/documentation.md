@@ -59,5 +59,18 @@ mdbook test docs
 mdbook build docs
 ```
 
+The rendered book is also checked after the build because mdBook can rewrite
+source paths such as `README.md` into generated `index.html` pages. Install
+[`lychee`](https://github.com/lycheeverse/lychee) and run:
+
+```text
+make docs-links
+```
+
+This checks local HTML links and assets in `target/mdbook`, treating a
+directory link as valid when it contains `index.html`. The Pages workflow runs
+the same rendered-output check with the official
+[`lychee-action`](https://github.com/lycheeverse/lychee-action).
+
 Until P1-T1 installs these tools and projects, validation reports must record
 which checks were structurally verified and which checks were unavailable.
