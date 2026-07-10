@@ -53,7 +53,7 @@ their empty identities are `true` and `false`, respectively.
 ## Where to go next
 
 - Need heterogeneous or runtime-selected rules? Read [Dynamic and shared
-  specifications](../concepts/README.md#static-and-dynamic-rules).
+  specifications](../concepts/#static-and-dynamic-rules).
 - Need a typed outcome instead of `bool`? Read [Decisions and evaluation
   context](../guides/decisions-context.md).
 - Need network or I/O-backed evaluation? Read [Async

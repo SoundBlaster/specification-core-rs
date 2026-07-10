@@ -33,12 +33,14 @@ jobs:
           mdbook build docs
           mkdir -p target/mdbook/api
           cp -R target/doc/. target/mdbook/api/
+          cp docs/api/index.html target/mdbook/api/index.html
       - name: Check rendered documentation links
         uses: lycheeverse/lychee-action@v2
         with:
           args: >-
             --offline
             --scheme file
+            --root-dir target/mdbook
             --index-files index.html,.
             'target/mdbook/**/*.html'
           fail: true
