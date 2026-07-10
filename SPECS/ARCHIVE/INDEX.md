@@ -30,6 +30,7 @@
 | [_Historical/REVIEW_p2_t2_async_specifications.md](_Historical/REVIEW_p2_t2_async_specifications.md) | Review report for P2-T2 (FOLLOW-UP skipped) |
 | [_Historical/REVIEW_p2_t3_serialization_macros.md](_Historical/REVIEW_p2_t3_serialization_macros.md) | Review report for P2-T3 (FOLLOW-UP skipped) |
 | [_Historical/REVIEW_p3_t1_conformance_fixtures.md](_Historical/REVIEW_p3_t1_conformance_fixtures.md) | Review report for P3-T1 (FOLLOW-UP skipped) |
+| [_Historical/REVIEW_p3_t2_documentation_benchmarks.md](_Historical/REVIEW_p3_t2_documentation_benchmarks.md) | Review report for P3-T2 (FOLLOW-UP skipped) |
 
 ## Archive Log
 
@@ -59,3 +60,4 @@
 | 2026-07-10 | P3-T1 | Archived Cross-language Conformance Fixtures (PASS) |
 | 2026-07-10 | P3-T1 | Archived REVIEW_p3_t1_conformance_fixtures report (FOLLOW-UP skipped) |
 | 2026-07-10 | P3-T2 | Archived Documentation Completion and Benchmarks (PASS) |
+| 2026-07-10 | P3-T2 | Archived REVIEW_p3_t2_documentation_benchmarks report (FOLLOW-UP skipped) |
