@@ -39,7 +39,7 @@ jobs:
           rustc +${{ matrix.toolchain }} --version
           cargo +${{ matrix.toolchain }} --version
       - name: Run tests
-        run: cargo +${{ matrix.toolchain }} test --workspace --all-targets --all-features
+        run: cargo +${{ matrix.toolchain }} test --workspace --lib --tests --examples --all-features
 
   lint:
     name: Format and Clippy
@@ -65,7 +65,17 @@ jobs:
       - name: Build release
         run: cargo +stable build --workspace --release --locked
       - name: Verify package layout
-        run: cargo +stable package -p specification-core --allow-dirty --locked
+        run: cargo +stable package --workspace --locked
+
+  benchmarks:
+    name: Benchmark compilation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install stable Rust
+        run: rustup toolchain install stable --profile minimal
+      - name: Compile benchmark target
+        run: cargo +stable bench -p specification-core --bench dispatch --no-run --locked
 
   docs:
     name: Documentation and doctests
