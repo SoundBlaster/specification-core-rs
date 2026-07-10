@@ -1,0 +1,114 @@
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: ["**"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  test:
+    name: Test (${{ matrix.os }}, Rust ${{ matrix.toolchain }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            toolchain: "1.85.0"
+          - os: ubuntu-latest
+            toolchain: stable
+          - os: macos-latest
+            toolchain: stable
+          - os: windows-latest
+            toolchain: stable
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust toolchain
+        shell: bash
+        run: |
+          rustup toolchain install ${{ matrix.toolchain }} --profile minimal
+          rustup component add --toolchain ${{ matrix.toolchain }} clippy rustfmt
+          rustc +${{ matrix.toolchain }} --version
+          cargo +${{ matrix.toolchain }} --version
+      - name: Run tests
+        run: cargo +${{ matrix.toolchain }} test --workspace --all-targets --all-features
+
+  lint:
+    name: Format and Clippy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install stable Rust
+        run: |
+          rustup toolchain install stable --profile minimal
+          rustup component add --toolchain stable clippy rustfmt
+      - name: Check formatting
+        run: cargo +stable fmt --all -- --check
+      - name: Run Clippy
+        run: cargo +stable clippy --workspace --all-targets --all-features -- -D warnings
+
+  release:
+    name: Release build and package
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install stable Rust
+        run: rustup toolchain install stable --profile minimal
+      - name: Build release
+        run: cargo +stable build --workspace --release
+      - name: Verify package layout
+        run: cargo +stable package -p specification-core --allow-dirty
+
+  docs:
+    name: Documentation and doctests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install stable Rust
+        run: rustup toolchain install stable --profile minimal
+      - name: Install mdBook
+        run: cargo +stable install mdbook --version 0.5.4 --locked
+      - name: Run doctests
+        run: cargo +stable test --workspace --doc --all-features
+      - name: Build rustdoc
+        run: RUSTDOCFLAGS="-D warnings" cargo +stable doc --workspace --all-features --no-deps
+      - name: Build and test mdBook
+        run: |
+          mdbook test docs
+          mdbook build docs
+
+  coverage:
+    name: Coverage measurement
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install stable Rust and LLVM tools
+        run: |
+          rustup toolchain install stable --profile minimal
+          rustup component add --toolchain stable llvm-tools-preview
+      - name: Install cargo-llvm-cov
+        run: cargo +stable install cargo-llvm-cov --locked
+      - name: Measure coverage
+        run: cargo +stable llvm-cov --workspace --all-features --no-report
+
+  miri:
+    name: Miri
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install nightly Miri
+        run: |
+          rustup toolchain install nightly --profile minimal
+          rustup component add --toolchain nightly miri
+      - name: Run Miri tests
+        run: |
+          cargo +nightly miri setup
+          cargo +nightly miri test --workspace --all-targets --all-features

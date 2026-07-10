@@ -13,7 +13,14 @@ Thank you for contributing. This repository is building an idiomatic Rust implem
 
 Flow tasks follow `BRANCH → SELECT → PLAN → EXECUTE → ARCHIVE → REVIEW → FOLLOW-UP → ARCHIVE-REVIEW`. Normal task branches use the Flow branch pattern; an explicitly approved stacked series may use the preceding task branch as its base.
 
-`P1-T1` will create the Cargo workspace and automated Rust checks. Until then, documentation-only tasks validate files, links, and whitespace directly and record why Cargo commands are unavailable.
+Run `make check` before submitting a Rust implementation change. Use
+`make coverage`, `make miri`, and `make package` when the active task requires
+their corresponding release or safety evidence. CI verifies the complete matrix
+described in the [toolchain and quality policy](docs/engineering/toolchain-quality-release-policy.md).
+
+Install mdBook with `cargo +stable install mdbook --version 0.5.4 --locked`
+before the first documentation check. CI provisions mdBook, cargo-llvm-cov, and
+the nightly Miri component independently of the pinned package MSRV.
 
 ## Pull Requests
 
