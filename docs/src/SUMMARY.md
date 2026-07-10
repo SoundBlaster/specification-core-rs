@@ -14,6 +14,7 @@
 # Guides
 
 - [Documentation and Testing](guides/README.md)
+- [Async Specifications](guides/async.md)
 
 # Migration from Swift
 

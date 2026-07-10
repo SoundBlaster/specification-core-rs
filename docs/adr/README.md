@@ -27,3 +27,4 @@ or release process. Do not write one for a reversible local refactor.
 - [ADR-0002: Adopt Core Safety and Quality Policy](0002-adopt-core-safety-and-quality-policy.md)
 - [ADR-0003: Establish Swift Behavioral Reference](0003-establish-swift-behavioral-reference.md)
 - [ADR-0004: Explicit Concurrency Contracts](0004-explicit-concurrency-contracts.md)
+- [ADR-0005: Runtime-Neutral Async Specifications](0005-runtime-neutral-async-specifications.md)

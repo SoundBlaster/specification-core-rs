@@ -16,7 +16,7 @@ For executable-source evidence and adopt/adapt/defer/exclude decisions, see the
 | `SpecificationOperators.md` | combinator rustdoc and getting-started | Adapt operators to Rust ergonomics |
 | `AnySpecification.md` | dynamic-dispatch rustdoc and concepts | Adapt type erasure to explicit trait objects |
 | `DecisionSpec.md` | decision rustdoc and concepts | Preserve ordered typed decision rationale |
-| `AsyncSpecification.md` | deferred async guide | Do not publish as implemented before async ADR and code |
+| `AsyncSpecification.md` | async specification guide and rustdoc | Adapt to runtime-neutral RPITIT futures and explicit Send bounds |
 | `ContextProviding.md` | context rustdoc and concepts | Adapt provider model to dependency injection |
 
 ## Context and Built-in Specification Articles
@@ -39,7 +39,7 @@ For executable-source evidence and adopt/adapt/defer/exclude decisions, see the
 | Swift DocC source | Rust destination | Treatment |
 |---|---|---|
 | `Satisfies.md` | migration guide | Explain explicit evaluation; no property-wrapper port |
-| `AsyncSatisfies.md` | migration and deferred async guide | Do not promise runtime support |
+| `AsyncSatisfies.md` | async specification guide | Rewrite as explicit future evaluation; executor remains caller-owned |
 | `Decides.md` | decision guide | Adapt to ordinary Rust values/functions |
 | `Maybe.md` | decision guide | Adapt optional decisions to `Option` |
 | `SpecsMacro.md` | macro roadmap | Defer until procedural macro crate is justified |
