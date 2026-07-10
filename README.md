@@ -42,4 +42,5 @@ Miri component. CI provisions both tools automatically.
 
 See the [contribution guide](CONTRIBUTING.md), the
 [toolchain and quality policy](docs/engineering/toolchain-quality-release-policy.md),
-and the [mdBook source](docs/src/README.md).
+the [release checklist](docs/engineering/release-checklist.md), and the
+[mdBook source](docs/src/README.md).

@@ -195,7 +195,7 @@ take precedence over source-level parity.
 - **Priority:** P1
 - **Dependencies:** P2-T2, P3-T2
 - **Parallelizable:** no
-- **Status:** Not Started
+- **Status:** Complete
 - **Acceptance Criteria:**
   - MSRV and supported platforms are documented
   - `cargo package` succeeds from a clean checkout
