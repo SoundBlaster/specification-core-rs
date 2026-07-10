@@ -42,8 +42,8 @@ For executable-source evidence and adopt/adapt/defer/exclude decisions, see the
 | `AsyncSatisfies.md` | async specification guide | Rewrite as explicit future evaluation; executor remains caller-owned |
 | `Decides.md` | decision guide | Adapt to ordinary Rust values/functions |
 | `Maybe.md` | decision guide | Adapt optional decisions to `Option` |
-| `SpecsMacro.md` | macro roadmap | Defer until procedural macro crate is justified |
-| `AutoContextMacro.md` | macro roadmap | Defer; avoid implicit global context |
+| `SpecsMacro.md` | serialization and macros guide | Adapt to explicit predicate macro in a separate crate |
+| `AutoContextMacro.md` | serialization and macros guide | Exclude implicit context; retain explicit dependency injection |
 
 ## Tutorials
 

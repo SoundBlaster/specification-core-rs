@@ -1,20 +1,22 @@
 # Architecture Baseline
 
-## Initial Workspace
+## Workspace
 
-The repository will become a Cargo workspace in `P1-T1`. Its initial public
-package is a single library crate:
+The repository is a Cargo workspace. The core public package is accompanied by
+optional integration crates:
 
 ```text
 specification-core-rs/
 └── crates/
-    └── specification-core/
+    ├── specification-core/
+    ├── specification-core-serde/
+    └── specification-core-macros/
 ```
 
 The root owns repository-wide metadata, CI, contributor documentation, and
-release policy. The core crate owns the synchronous Specification Pattern API.
-No implementation crate is created by this document; `P1-T1` implements this
-boundary after the toolchain policy is decided.
+release policy. The core crate owns the synchronous and runtime-neutral async
+Specification Pattern API. Integration crates depend on the core; the core
+does not depend on either integration.
 
 ## Core Responsibilities
 
@@ -35,7 +37,7 @@ Future capabilities belong in separate crates when they introduce a distinct
 dependency surface, compiler integration, or platform boundary:
 
 ```text
-specification-core              ← synchronous public core
+specification-core              ← synchronous and async public core
 specification-core-macros       ← optional procedural macros
 specification-core-serde        ← optional serialization integration
 specification-core-ffi          ← optional foreign-language facade

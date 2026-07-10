@@ -1,0 +1,21 @@
+[package]
+name = "specification-core-serde"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+description = "Versioned declarative rule documents for specification-core"
+readme = "README.md"
+keywords = ["business-rules", "serde", "serialization"]
+categories = ["config", "encoding"]
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+
+[dev-dependencies]
+serde_json = "1"
+
+[lints]
+workspace = true
