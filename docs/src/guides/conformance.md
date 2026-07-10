@@ -3,7 +3,7 @@
 The Rust crate is an idiomatic implementation, not a source-level translation
 of the Swift package. Cross-language compatibility is therefore expressed as
 observable behavior in the versioned JSON corpus at
-`fixtures/conformance/v1/`.
+`crates/specification-core/fixtures/conformance/v1/`.
 
 ## Running the corpus
 

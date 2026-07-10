@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := check
 
-.PHONY: check fmt-check lint test doctest docs release package coverage miri benchmark
+.PHONY: check fmt-check lint test doctest docs release package coverage miri benchmark benchmark-build
 
 check: fmt-check lint test doctest docs release
 
@@ -11,7 +11,7 @@ lint:
 	cargo clippy --workspace --all-targets --all-features -- -D warnings
 
 test:
-	cargo test --workspace --all-targets --all-features
+	cargo test --workspace --lib --tests --examples --all-features
 
 doctest:
 	cargo test --workspace --doc --all-features
@@ -25,7 +25,7 @@ release:
 	cargo build --workspace --release
 
 package:
-	cargo package -p specification-core --allow-dirty --locked
+	cargo package --workspace --locked
 
 coverage:
 	cargo llvm-cov --workspace --all-features --fail-under-lines 90
@@ -36,3 +36,6 @@ miri:
 
 benchmark:
 	cargo bench -p specification-core --bench dispatch
+
+benchmark-build:
+	cargo bench -p specification-core --bench dispatch --no-run

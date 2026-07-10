@@ -16,7 +16,7 @@ From a clean checkout of the intended commit:
 make check
 make coverage
 make miri
-cargo package --workspace --allow-dirty --locked
+cargo package --workspace --locked
 cargo publish -p specification-core --dry-run --locked
 cargo publish -p specification-core-serde --dry-run --locked
 cargo publish -p specification-core-macros --dry-run --locked

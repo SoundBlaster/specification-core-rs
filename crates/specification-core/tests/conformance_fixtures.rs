@@ -12,9 +12,7 @@ type Trace = Rc<RefCell<Vec<String>>>;
 
 #[test]
 fn v1_conformance_manifest_passes() {
-    let manifest = read_json(include_str!(
-        "../../../fixtures/conformance/v1/manifest.json"
-    ));
+    let manifest = read_json(include_str!("../fixtures/conformance/v1/manifest.json"));
     assert_eq!(integer(&manifest, "schema_version"), 1);
 
     for fixture_name in array(&manifest, "fixtures") {
@@ -217,9 +215,9 @@ fn assert_trace(case: &Value, trace: &Trace) {
 
 fn fixture_source(fixture_name: &str) -> &'static str {
     match fixture_name {
-        "composition.json" => include_str!("../../../fixtures/conformance/v1/composition.json"),
-        "first-match.json" => include_str!("../../../fixtures/conformance/v1/first-match.json"),
-        "context.json" => include_str!("../../../fixtures/conformance/v1/context.json"),
+        "composition.json" => include_str!("../fixtures/conformance/v1/composition.json"),
+        "first-match.json" => include_str!("../fixtures/conformance/v1/first-match.json"),
+        "context.json" => include_str!("../fixtures/conformance/v1/context.json"),
         unsupported => panic!("fixture is not embedded by the Rust adapter: {unsupported}"),
     }
 }

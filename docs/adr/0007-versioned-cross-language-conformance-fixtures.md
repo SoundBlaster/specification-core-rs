@@ -19,7 +19,7 @@ than observable compatibility scenarios.
 ## Decision
 
 Adopt a repository-owned, JSON conformance corpus under
-`fixtures/conformance/v1/`. A manifest lists fixture files and every document
+`crates/specification-core/fixtures/conformance/v1/`. A manifest lists fixture files and every document
 has `schema_version: 1`. The version is part of the fixture contract; consumers
 must reject unknown versions rather than guessing their meaning.
 
