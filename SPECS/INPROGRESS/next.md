@@ -1,14 +1,15 @@
-# Next Task: P3-T1 — Cross-language Conformance Fixtures
+# Next Task: P3-T2 — Documentation Completion and Benchmarks
 
 **Priority:** P1
 **Phase:** Compatibility and Release
 **Effort:** High
-**Dependencies:** P1-T4
-**Status:** INPROGRESS
+**Dependencies:** P2-T1, P3-T1
+**Status:** Candidate
 
 ## Description
 
-Define behavioral fixtures shared conceptually with the Swift implementation.
+Complete the incrementally maintained guides, examples, API documentation, and
+baseline performance benchmarks.
 
 ## Recently Archived
 
@@ -19,8 +20,9 @@ Define behavioral fixtures shared conceptually with the Swift implementation.
 - P2-T1 — Concurrency Contracts (PASS, 2026-07-10)
 - P2-T2 — Async Specifications (PASS, 2026-07-10)
 - P2-T3 — Serialization and Macros Evaluation (PASS, 2026-07-10)
+- P3-T1 — Cross-language Conformance Fixtures (PASS, 2026-07-10)
 
 ## Next Step
 
-P3-T1 is active. Define portable composition, first-match, and context
-fixtures before documentation and benchmark completion.
+Select P3-T2 to complete the documentation surface and establish reproducible
+static-versus-dynamic dispatch benchmarks before release preparation.

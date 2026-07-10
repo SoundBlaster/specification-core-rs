@@ -173,7 +173,7 @@ take precedence over source-level parity.
 - **Priority:** P1
 - **Dependencies:** P1-T4
 - **Parallelizable:** yes
-- **Status:** INPROGRESS
+- **Status:** Complete
 - **Acceptance Criteria:**
   - Composition, first-match, and context rules have portable fixtures
   - Rust conformance tests run in CI

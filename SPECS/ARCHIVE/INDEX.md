@@ -18,6 +18,7 @@
 | P2-T1 | [P2-T1_Concurrency_Contracts/](P2-T1_Concurrency_Contracts/) | 2026-07-10 | PASS |
 | P2-T2 | [P2-T2_Async_Specifications/](P2-T2_Async_Specifications/) | 2026-07-10 | PASS |
 | P2-T3 | [P2-T3_Serialization_and_Macros_Evaluation/](P2-T3_Serialization_and_Macros_Evaluation/) | 2026-07-10 | PASS |
+| P3-T1 | [P3-T1_Cross-language_Conformance_Fixtures/](P3-T1_Cross-language_Conformance_Fixtures/) | 2026-07-10 | PASS |
 
 ## Historical Artifacts
 
@@ -53,3 +54,4 @@
 | 2026-07-10 | P2-T1 | Archived Concurrency Contracts (PASS) |
 | 2026-07-10 | P2-T2 | Archived Async Specifications (PASS) |
 | 2026-07-10 | P2-T3 | Archived Serialization and Macros Evaluation (PASS) |
+| 2026-07-10 | P3-T1 | Archived Cross-language Conformance Fixtures (PASS) |
