@@ -230,9 +230,31 @@ impl<T: ?Sized> Specification<T> for BoxedSpecification<T> {
 }
 
 /// An explicitly type-erased specification that can be shared across threads.
-#[derive(Clone)]
+///
+/// The `Send + Sync` bounds belong to the erased trait object and the
+/// constructor, so sharing is an explicit API choice. The ordinary
+/// [`Specification`] trait remains usable for single-threaded rules that do
+/// not satisfy those bounds.
+///
+/// A captured non-thread-safe value is rejected at the shared boundary:
+///
+/// ```compile_fail
+/// use std::rc::Rc;
+/// use specification_core::SharedSpecification;
+///
+/// let state = Rc::new(1_u8);
+/// let _rule = SharedSpecification::new(move |_: &u8| *state == 1);
+/// ```
 pub struct SharedSpecification<T: ?Sized> {
     inner: Arc<dyn Specification<T> + Send + Sync>,
+}
+
+impl<T: ?Sized> Clone for SharedSpecification<T> {
+    fn clone(&self) -> Self {
+        Self {
+            inner: Arc::clone(&self.inner),
+        }
+    }
 }
 
 impl<T: ?Sized> SharedSpecification<T> {
@@ -313,6 +335,11 @@ impl<T: ?Sized, Decision> DecisionSpecification<T> for FirstMatch<T, Decision> {
 
 /// Immutable input data for specifications that need counters, flags, time,
 /// and application-specific user data.
+///
+/// The context has no interior mutability or global registration mechanism. It
+/// is `Send` and `Sync` when `UserData` and its standard-library fields are,
+/// allowing callers to move or share a context according to the auto-trait
+/// rules of the user data they provide.
 pub struct EvaluationContext<UserData> {
     user_data: UserData,
     counters: BTreeMap<String, u64>,
@@ -370,7 +397,11 @@ impl<UserData> EvaluationContext<UserData> {
     }
 }
 
-/// A deterministic source of evaluation time.
+/// A deterministic source of evaluation time supplied by the caller.
+///
+/// Implementations may use synchronization primitives when they need mutable
+/// state, but the provider is owned by the specification that receives it.
+/// There is no ambient or global clock.
 pub trait Clock {
     /// Returns the current time in the clock's chosen monotonic epoch.
     fn now(&self) -> Duration;
@@ -434,6 +465,9 @@ impl<UserData> Specification<EvaluationContext<UserData>> for Flag {
 }
 
 /// A specification satisfied after a named timestamp is at least one duration old.
+///
+/// `clock` is dependency-injected. A `Cooldown` can therefore be shared only
+/// when its clock implementation is also `Send + Sync`.
 pub struct Cooldown<ClockType> {
     key: String,
     duration: Duration,
@@ -467,13 +501,20 @@ where
 mod tests {
     use std::cell::Cell;
     use std::rc::Rc;
+    use std::sync::{
+        Arc,
+        atomic::{AtomicUsize, Ordering},
+    };
+    use std::thread;
     use std::time::Duration;
 
     use super::{
-        AllOf, Always, AnyOf, BoxedSpecification, Cooldown, DecisionSpecification,
+        AllOf, Always, AnyOf, BoxedSpecification, Clock, Cooldown, DecisionSpecification,
         EvaluationContext, FirstMatch, FixedClock, Flag, MaxCount, Never, SharedSpecification,
         Specification,
     };
+
+    fn assert_send_sync<T: Send + Sync>() {}
 
     struct CountingSpecification {
         result: bool,
@@ -615,6 +656,69 @@ mod tests {
 
         assert!(shared.is_satisfied_by(&2));
         assert!(!specification.is_satisfied_by(&3));
+    }
+
+    #[test]
+    fn shared_api_and_immutable_context_expose_expected_auto_traits() {
+        assert_send_sync::<SharedSpecification<i32>>();
+        assert_send_sync::<EvaluationContext<String>>();
+        assert_send_sync::<Cooldown<FixedClock>>();
+    }
+
+    #[test]
+    fn shared_specification_can_be_evaluated_concurrently() {
+        let specification = SharedSpecification::new(|number: &u64| *number % 2 == 0);
+        let handles = (0..8)
+            .map(|_| {
+                let specification = specification.clone();
+                thread::spawn(move || {
+                    (0..1_000_u64)
+                        .filter(|number| specification.is_satisfied_by(number))
+                        .count()
+                })
+            })
+            .collect::<Vec<_>>();
+
+        for handle in handles {
+            assert_eq!(handle.join().expect("worker thread should finish"), 500);
+        }
+    }
+
+    #[derive(Clone)]
+    struct CountingClock {
+        now: Duration,
+        reads: Arc<AtomicUsize>,
+    }
+
+    impl Clock for CountingClock {
+        fn now(&self) -> Duration {
+            self.reads.fetch_add(1, Ordering::Relaxed);
+            self.now
+        }
+    }
+
+    #[test]
+    fn injected_thread_safe_clock_can_back_a_shared_cooldown() {
+        let reads = Arc::new(AtomicUsize::new(0));
+        let clock = CountingClock {
+            now: Duration::from_secs(100),
+            reads: Arc::clone(&reads),
+        };
+        let specification =
+            SharedSpecification::new(Cooldown::new("last_login", Duration::from_secs(60), clock));
+        let handles = (0..4)
+            .map(|_| {
+                let specification = specification.clone();
+                let context = EvaluationContext::new(())
+                    .with_timestamp("last_login", Duration::from_secs(40));
+                thread::spawn(move || specification.is_satisfied_by(&context))
+            })
+            .collect::<Vec<_>>();
+
+        for handle in handles {
+            assert!(handle.join().expect("worker thread should finish"));
+        }
+        assert_eq!(reads.load(Ordering::Relaxed), 4);
     }
 
     #[test]

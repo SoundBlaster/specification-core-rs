@@ -9,6 +9,7 @@
 # Concepts
 
 - [Core Concepts](concepts/README.md)
+- [Concurrency Contracts](concepts/concurrency.md)
 
 # Guides
 
