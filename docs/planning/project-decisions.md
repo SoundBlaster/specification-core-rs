@@ -65,15 +65,20 @@ must later be promoted into the project charter or individual ADRs.
 
 ## Open Decisions for Phase 0
 
-- Rust edition and minimum supported Rust version (MSRV).
-- Supported target triples and CI matrix.
 - Final crates.io package-name availability.
-- Dependency admission and optional-feature policy.
-- Unsafe-code policy and whether the core crate forbids unsafe code.
-- Coverage tooling and minimum threshold.
 - Exact `DynSpec` ownership form and object-safety boundaries.
 - Initial `0.1.0` feature boundary, especially async and conformance fixtures.
-- Release automation and crates.io ownership model.
+
+## Resolved by P0-T4
+
+- Rust 2024 with MSRV 1.85 and resolver 3.
+- Tested Linux, Apple Silicon macOS, and Windows MSVC target matrix.
+- Zero required third-party dependencies in the synchronous core by default.
+- Additive optional Cargo features with documented dependency and license review.
+- `forbid(unsafe_code)` for the core crate; exceptions require an ADR.
+- `cargo llvm-cov` provisioning in P1-T1 and a 90% core line gate in P1-T2.
+- SoundBlaster maintainer-owned SemVer releases, package checks, and publication
+  approval process.
 
 ## Known Baseline Observations
 

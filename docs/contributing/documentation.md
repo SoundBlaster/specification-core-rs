@@ -53,7 +53,7 @@ Every source article and tutorial must have a destination or explicit exclusion.
 When the toolchain exists, documentation changes run:
 
 ```text
-cargo test --workspace --doc
+cargo test --workspace --doc --all-features
 RUSTDOCFLAGS="-D warnings" cargo doc --workspace --all-features --no-deps
 mdbook test docs
 mdbook build docs

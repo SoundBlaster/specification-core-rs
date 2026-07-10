@@ -53,7 +53,7 @@ take precedence over source-level parity.
 - **Priority:** P0
 - **Dependencies:** P0-T1
 - **Parallelizable:** yes
-- **Status:** Not Started
+- **Status:** Complete
 - **Acceptance Criteria:**
   - Rust edition, MSRV, supported targets, and CI compatibility matrix are decided
   - Formatting, Clippy, tests, rustdoc, mdBook, and coverage gates are specified
