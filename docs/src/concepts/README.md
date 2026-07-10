@@ -9,6 +9,19 @@ The core boolean algebra has predictable identities: an empty `AllOf` is true,
 and an empty `AnyOf` is false. This lets callers construct rules from possibly
 empty collections without special-case control flow.
 
+## Dynamic dispatch and decisions
+
+Static composition is the default. When a program truly needs heterogeneous or
+runtime-selected rules, use `BoxedSpecification<T>` explicitly. Use
+`SharedSpecification<T>` only when the stored rule must cross thread
+boundaries; its constructor requires `Send + Sync`.
+
+`FirstMatch<T, Decision>` associates each boxed rule with one concrete decision
+type. It evaluates rules in insertion order, returns the first matching
+decision, and otherwise returns `None` (or an explicitly supplied fallback).
+This keeps dynamic rule selection visible while preserving strongly typed
+business outcomes.
+
 The project prioritizes typed evaluation data, explicit ownership, visible
 concurrency contracts, and runtime-neutral design. Detailed API semantics are
 published in rustdoc as implementation tasks complete.
