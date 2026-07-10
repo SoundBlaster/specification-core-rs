@@ -27,7 +27,7 @@ take precedence over source-level parity.
 - **Priority:** P0
 - **Dependencies:** P0-T1
 - **Parallelizable:** yes
-- **Status:** Not Started
+- **Status:** Complete
 - **Acceptance Criteria:**
   - Root `AGENTS.md` defines mandatory repository and documentation rules
   - `CONTRIBUTING.md` defines development, review, and commit expectations
