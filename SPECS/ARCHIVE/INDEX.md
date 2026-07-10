@@ -13,6 +13,7 @@
 | P0-T5 | [P0-T5_Swift_Reference_Audit_and_Porting_Matrix/](P0-T5_Swift_Reference_Audit_and_Porting_Matrix/) | 2026-07-10 | PASS WITH REFERENCE BASELINE FAILURE RECORDED |
 | P1-T1 | [P1-T1_Bootstrap_Rust_Workspace/](P1-T1_Bootstrap_Rust_Workspace/) | 2026-07-10 | PASS WITH REMOTE CI PENDING |
 | P1-T2 | [P1-T2_Core_Specification_API/](P1-T2_Core_Specification_API/) | 2026-07-10 | PASS WITH REMOTE CI PENDING |
+| P1-T3 | [P1-T3_Dynamic_Specifications_and_Decisions/](P1-T3_Dynamic_Specifications_and_Decisions/) | 2026-07-10 | PASS WITH REMOTE CI PENDING |
 
 ## Historical Artifacts
 
@@ -38,3 +39,4 @@
 | 2026-07-10 | P1-T1 | Archived REVIEW_p1_t1_workspace_ci report (FOLLOW-UP skipped) |
 | 2026-07-10 | P1-T2 | Archived Core Specification API (PASS WITH REMOTE CI PENDING) |
 | 2026-07-10 | P1-T2 | Archived REVIEW_p1_t2_core_specification_api report (FOLLOW-UP skipped) |
+| 2026-07-10 | P1-T3 | Archived Dynamic Specifications and Decisions (PASS WITH REMOTE CI PENDING) |

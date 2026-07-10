@@ -109,7 +109,7 @@ take precedence over source-level parity.
 - **Priority:** P0
 - **Dependencies:** P1-T2
 - **Parallelizable:** no
-- **Status:** INPROGRESS
+- **Status:** Complete
 - **Acceptance Criteria:**
   - Dynamic specifications require explicit type erasure
   - Shared dynamic specifications enforce `Send + Sync`
