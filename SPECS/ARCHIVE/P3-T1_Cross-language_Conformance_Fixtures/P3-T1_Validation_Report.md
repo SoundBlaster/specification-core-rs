@@ -1,6 +1,6 @@
 # P3-T1 Validation Report — Cross-language Conformance Fixtures
 
-**Date:** 2026-07-10  
+**Date:** 2026-07-10
 **Verdict:** PASS
 
 ## Deliverables

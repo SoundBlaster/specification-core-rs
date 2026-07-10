@@ -1,8 +1,8 @@
 # P3-T1 — Cross-language Conformance Fixtures
 
-**Status:** INPROGRESS  
-**Priority:** P1  
-**Dependencies:** P1-T4  
+**Status:** INPROGRESS
+**Priority:** P1
+**Dependencies:** P1-T4
 **Date:** 2026-07-10
 
 ## Goal
