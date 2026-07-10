@@ -4,7 +4,7 @@
 **Phase:** Compatibility and Release
 **Effort:** High
 **Dependencies:** P2-T1, P3-T1
-**Status:** Candidate
+**Status:** INPROGRESS
 
 ## Description
 
@@ -24,5 +24,5 @@ baseline performance benchmarks.
 
 ## Next Step
 
-Select P3-T2 to complete the documentation surface and establish reproducible
+P3-T2 is active. Complete the documentation surface and establish reproducible
 static-versus-dynamic dispatch benchmarks before release preparation.
