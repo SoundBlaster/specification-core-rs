@@ -4,9 +4,9 @@ This book explains the concepts, design choices, and migration path for
 `specification-core`. It complements the crate's rustdoc API reference rather
 than duplicating it.
 
-The synchronous Rust core has not been implemented yet. The guide therefore
-documents accepted project direction and planned learning paths without claiming
-that unreleased APIs are available.
+The synchronous Rust core is implemented and the guide documents its accepted
+contracts, usage patterns, and planned learning paths. Features not yet
+implemented remain marked as future work in the relevant chapters.
 
 ## Documentation Surfaces
 
