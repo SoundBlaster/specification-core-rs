@@ -1,15 +1,14 @@
-# Next Task: P3-T2 — Documentation Completion and Benchmarks
+# Next Task: P3-T3 — Publish 0.1.0
 
 **Priority:** P1
 **Phase:** Compatibility and Release
 **Effort:** High
-**Dependencies:** P2-T1, P3-T1
-**Status:** INPROGRESS
+**Dependencies:** P2-T2, P3-T2
+**Status:** Candidate
 
 ## Description
 
-Complete the incrementally maintained guides, examples, API documentation, and
-baseline performance benchmarks.
+Validate packaging and prepare the first public crate release.
 
 ## Recently Archived
 
@@ -21,8 +20,9 @@ baseline performance benchmarks.
 - P2-T2 — Async Specifications (PASS, 2026-07-10)
 - P2-T3 — Serialization and Macros Evaluation (PASS, 2026-07-10)
 - P3-T1 — Cross-language Conformance Fixtures (PASS, 2026-07-10)
+- P3-T2 — Documentation Completion and Benchmarks (PASS, 2026-07-10)
 
 ## Next Step
 
-P3-T2 is active. Complete the documentation surface and establish reproducible
-static-versus-dynamic dispatch benchmarks before release preparation.
+Select P3-T3 to prepare the 0.1.0 release gate. Publishing, tags, and the
+GitHub Release require explicit confirmation after preparation is complete.
