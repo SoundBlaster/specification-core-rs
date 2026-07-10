@@ -61,3 +61,7 @@ maps to the Swift reference implementation.
 3. Update the Pages workflow and README links.
 4. Run all gates, build the book and API artifact, and perform a link/content
    audit before archiving.
+
+---
+**Archived:** 2026-07-10
+**Verdict:** PASS

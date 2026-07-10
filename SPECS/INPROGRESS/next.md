@@ -1,17 +1,14 @@
-# Next Step: Documentation Editorial Rewrite
+# Next Step: Review Documentation Editorial Rewrite
 
 **Task ID:** P4-T1
 **Priority:** P1
 **Phase:** Documentation Editorial Quality
-**Effort:** Medium
-**Dependencies:** P3-T3
-**Status:** INPROGRESS
+**Status:** Archived — REVIEW pending
 
 ## Description
 
-Rewrite the published documentation as a reader-first guide for the released
-0.1.0 API. Keep rustdoc as the item-level reference, make it discoverable from
-the mdBook, and connect the public workflows with runnable Cargo examples.
+The documentation rewrite passed implementation validation and is archived.
+Run the structured Flow review, then archive the review artifact.
 
 ## Recently Archived
 
@@ -25,8 +22,9 @@ the mdBook, and connect the public workflows with runnable Cargo examples.
 - P3-T1 — Cross-language Conformance Fixtures (PASS, 2026-07-10)
 - P3-T2 — Documentation Completion and Benchmarks (PASS, 2026-07-10)
 - P3-T3 — Publish 0.1.0 (PASS — RELEASE PREPARATION COMPLETE, 2026-07-10)
+- P4-T1 — Documentation Editorial Rewrite (PASS, 2026-07-10)
 
 ## Next Step
 
-Execute P4-T1 through the full Flow lifecycle, then select the next
-post-release improvement from the updated workplan.
+Complete REVIEW, FOLLOW-UP (or explicitly skip it), and ARCHIVE-REVIEW for
+P4-T1 before selecting the next post-release improvement.

@@ -21,6 +21,7 @@
 | P3-T1 | [P3-T1_Cross-language_Conformance_Fixtures/](P3-T1_Cross-language_Conformance_Fixtures/) | 2026-07-10 | PASS |
 | P3-T2 | [P3-T2_Documentation_Completion_and_Benchmarks/](P3-T2_Documentation_Completion_and_Benchmarks/) | 2026-07-10 | PASS |
 | P3-T3 | [P3-T3_Publish_0.1.0/](P3-T3_Publish_0.1.0/) | 2026-07-10 | PASS — RELEASE PREPARATION COMPLETE |
+| P4-T1 | [P4-T1_Documentation_Editorial_Rewrite/](P4-T1_Documentation_Editorial_Rewrite/) | 2026-07-10 | PASS |
 
 ## Historical Artifacts
 
@@ -65,3 +66,4 @@
 | 2026-07-10 | P3-T2 | Archived REVIEW_p3_t2_documentation_benchmarks report (FOLLOW-UP skipped) |
 | 2026-07-10 | P3-T3 | Archived Publish 0.1.0 (PASS — RELEASE PREPARATION COMPLETE) |
 | 2026-07-10 | P3-T3 | Archived REVIEW_p3_t3_release_preparation report (FOLLOW-UP skipped) |
+| 2026-07-10 | P4-T1 | Archived Documentation Editorial Rewrite (PASS) |
