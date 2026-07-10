@@ -97,7 +97,7 @@ jobs:
       - name: Install cargo-llvm-cov
         run: cargo +stable install cargo-llvm-cov --locked
       - name: Measure coverage
-        run: cargo +stable llvm-cov --workspace --all-features --no-report
+        run: cargo +stable llvm-cov --workspace --all-features --fail-under-lines 90
 
   miri:
     name: Miri
