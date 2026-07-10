@@ -1,15 +1,17 @@
-# Next Step: Publish 0.1.0
+# Next Step: Documentation Editorial Rewrite
 
+**Task ID:** P4-T1
 **Priority:** P1
-**Phase:** Compatibility and Release
-**Effort:** High
-**Dependencies:** P2-T2, P3-T2
-**Status:** Awaiting maintainer confirmation
+**Phase:** Documentation Editorial Quality
+**Effort:** Medium
+**Dependencies:** P3-T3
+**Status:** INPROGRESS
 
 ## Description
 
-Release preparation is complete. Publish the prepared 0.1.0 crates only after
-explicit maintainer confirmation.
+Rewrite the published documentation as a reader-first guide for the released
+0.1.0 API. Keep rustdoc as the item-level reference, make it discoverable from
+the mdBook, and connect the public workflows with runnable Cargo examples.
 
 ## Recently Archived
 
@@ -26,6 +28,5 @@ explicit maintainer confirmation.
 
 ## Next Step
 
-After explicit confirmation, publish `specification-core`,
-`specification-core-serde`, and `specification-core-macros` in that order,
-then create tag `v0.1.0` and its GitHub Release.
+Execute P4-T1 through the full Flow lifecycle, then select the next
+post-release improvement from the updated workplan.
