@@ -4,7 +4,7 @@
 **Phase:** Foundation
 **Effort:** Medium
 **Dependencies:** P1-T3
-**Status:** Candidate
+**Status:** Selected
 
 ## Description
 
@@ -19,5 +19,4 @@ time specifications with injected clock/context dependencies.
 
 ## Next Step
 
-Select P1-T4 after the P1-T3 stacked pull request is open and its GitHub
-Actions results have been inspected.
+Create the implementation-ready PRD during PLAN.
