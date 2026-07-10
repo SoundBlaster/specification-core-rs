@@ -15,6 +15,7 @@
 
 - [Documentation and Testing](guides/README.md)
 - [Async Specifications](guides/async.md)
+- [Serialization and Macros](guides/serialization-macros.md)
 
 # Migration from Swift
 

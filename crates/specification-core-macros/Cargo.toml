@@ -1,0 +1,26 @@
+[package]
+name = "specification-core-macros"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+description = "Opt-in procedural macros for specification-core"
+readme = "README.md"
+keywords = ["business-rules", "macro", "specification"]
+categories = ["development-tools::procedural-macro-helpers"]
+
+[lib]
+proc-macro = true
+
+[dependencies]
+proc-macro2 = "1"
+quote = "1"
+syn = { version = "2", features = ["full"] }
+
+[dev-dependencies]
+specification-core = { path = "../specification-core" }
+
+[lints]
+workspace = true

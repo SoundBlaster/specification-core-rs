@@ -28,3 +28,4 @@ or release process. Do not write one for a reversible local refactor.
 - [ADR-0003: Establish Swift Behavioral Reference](0003-establish-swift-behavioral-reference.md)
 - [ADR-0004: Explicit Concurrency Contracts](0004-explicit-concurrency-contracts.md)
 - [ADR-0005: Runtime-Neutral Async Specifications](0005-runtime-neutral-async-specifications.md)
+- [ADR-0006: Optional Serialization and Macro Boundaries](0006-optional-serialization-and-macro-boundaries.md)

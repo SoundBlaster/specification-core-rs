@@ -158,7 +158,7 @@ take precedence over source-level parity.
 - **Priority:** P2
 - **Dependencies:** P1-T4
 - **Parallelizable:** yes
-- **Status:** Not Started
+- **Status:** Complete
 - **Acceptance Criteria:**
   - Serialization schema is explicitly versioned
   - Procedural macros remain in a separate crate if adopted

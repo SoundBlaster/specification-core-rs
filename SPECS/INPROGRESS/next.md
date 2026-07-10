@@ -1,15 +1,14 @@
-# Next Task: P2-T3 — Serialization and Macros Evaluation
+# Next Task: P3-T1 — Cross-language Conformance Fixtures
 
-**Priority:** P2
-**Phase:** Extended Capabilities
+**Priority:** P1
+**Phase:** Compatibility and Release
 **Effort:** High
 **Dependencies:** P1-T4
 **Status:** Candidate
 
 ## Description
 
-Prototype optional serialization and procedural macros, retaining only
-features with demonstrated ergonomic value.
+Define behavioral fixtures shared conceptually with the Swift implementation.
 
 ## Recently Archived
 
@@ -19,9 +18,9 @@ features with demonstrated ergonomic value.
 - P1-T4 — Evaluation Context and Built-ins (PASS WITH REMOTE CI PENDING, 2026-07-10)
 - P2-T1 — Concurrency Contracts (PASS, 2026-07-10)
 - P2-T2 — Async Specifications (PASS, 2026-07-10)
+- P2-T3 — Serialization and Macros Evaluation (PASS, 2026-07-10)
 
 ## Next Step
 
-P2-T2 is complete. Evaluate serialization and macros independently; retain
-only features with demonstrated ergonomic value and keep the core crate free
-of optional integration requirements by default.
+Phase 2 is complete. Select P3-T1 to define portable composition, first-match,
+context, and async behavior fixtures before documentation/benchmark completion.
