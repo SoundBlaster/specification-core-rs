@@ -26,6 +26,7 @@
 | [_Historical/](_Historical/) | Non-task artifacts |
 | [_Historical/REVIEW_p2_t1_concurrency_contracts.md](_Historical/REVIEW_p2_t1_concurrency_contracts.md) | Review report for P2-T1 (FOLLOW-UP skipped) |
 | [_Historical/REVIEW_p2_t2_async_specifications.md](_Historical/REVIEW_p2_t2_async_specifications.md) | Review report for P2-T2 (FOLLOW-UP skipped) |
+| [_Historical/REVIEW_p2_t3_serialization_macros.md](_Historical/REVIEW_p2_t3_serialization_macros.md) | Review report for P2-T3 (FOLLOW-UP skipped) |
 
 ## Archive Log
 
