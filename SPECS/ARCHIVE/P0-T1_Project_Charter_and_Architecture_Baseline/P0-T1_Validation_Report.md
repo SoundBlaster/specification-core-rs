@@ -20,8 +20,10 @@
 
 ```text
 git diff --check
-test -f docs/project-charter.md docs/architecture/README.md \
-  docs/adr/README.md docs/adr/0000-template.md
+for file in docs/project-charter.md docs/architecture/README.md \
+  docs/adr/README.md docs/adr/0000-template.md; do
+  test -f "$file"
+done
 rg -n 'idiomatic Rust|Non-Goals|Compatibility Policy|Send + Sync|rustdoc|mdBook' \
   docs/project-charter.md docs/architecture/README.md
 rg -n 'Status|Context|Decision|Consequences|Alternatives Considered|Follow-up' \
