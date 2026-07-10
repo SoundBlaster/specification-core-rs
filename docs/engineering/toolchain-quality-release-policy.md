@@ -34,7 +34,7 @@ P1-T1 must make these commands available locally and in CI:
 cargo fmt --all -- --check
 cargo clippy --workspace --all-targets --all-features -- -D warnings
 cargo test --workspace --all-targets --all-features
-cargo test --workspace --doc
+cargo test --workspace --doc --all-features
 RUSTDOCFLAGS="-D warnings" cargo doc --workspace --all-features --no-deps
 mdbook build docs
 mdbook test docs
