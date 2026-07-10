@@ -34,3 +34,4 @@
 | 2026-07-10 | P0-T5 | Archived Swift Reference Audit and Porting Matrix (PASS WITH REFERENCE BASELINE FAILURE RECORDED) |
 | 2026-07-10 | P0-T5 | Archived REVIEW_p0_t5_swift_audit report (FOLLOW-UP skipped) |
 | 2026-07-10 | P1-T1 | Archived Bootstrap Rust Workspace (PASS WITH REMOTE CI PENDING) |
+| 2026-07-10 | P1-T1 | Archived REVIEW_p1_t1_workspace_ci report (FOLLOW-UP skipped) |
