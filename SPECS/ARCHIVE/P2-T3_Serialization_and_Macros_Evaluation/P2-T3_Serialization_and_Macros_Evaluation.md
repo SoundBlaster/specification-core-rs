@@ -78,3 +78,7 @@ report.
 
 Public docs remain technical English. Dependency license review must cover
 serde, syn, quote, and proc-macro2 before publication.
+
+---
+**Archived:** 2026-07-10
+**Verdict:** PASS

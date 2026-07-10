@@ -17,6 +17,7 @@
 | P1-T4 | [P1-T4_Evaluation_Context_and_Built_ins/](P1-T4_Evaluation_Context_and_Built_ins/) | 2026-07-10 | PASS WITH REMOTE CI PENDING |
 | P2-T1 | [P2-T1_Concurrency_Contracts/](P2-T1_Concurrency_Contracts/) | 2026-07-10 | PASS |
 | P2-T2 | [P2-T2_Async_Specifications/](P2-T2_Async_Specifications/) | 2026-07-10 | PASS |
+| P2-T3 | [P2-T3_Serialization_and_Macros_Evaluation/](P2-T3_Serialization_and_Macros_Evaluation/) | 2026-07-10 | PASS |
 
 ## Historical Artifacts
 
@@ -50,3 +51,4 @@
 | 2026-07-10 | P1-T4 | Archived REVIEW_p1_t4_context_builtins report (FOLLOW-UP skipped) |
 | 2026-07-10 | P2-T1 | Archived Concurrency Contracts (PASS) |
 | 2026-07-10 | P2-T2 | Archived Async Specifications (PASS) |
+| 2026-07-10 | P2-T3 | Archived Serialization and Macros Evaluation (PASS) |
