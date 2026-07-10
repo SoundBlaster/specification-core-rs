@@ -28,7 +28,7 @@ package:
 	cargo package -p specification-core --allow-dirty --locked
 
 coverage:
-	cargo llvm-cov --workspace --all-features --no-report
+	cargo llvm-cov --workspace --all-features --fail-under-lines 90
 
 miri:
 	cargo +nightly miri setup

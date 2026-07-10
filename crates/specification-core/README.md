@@ -1,8 +1,14 @@
 # specification-core
 
 `specification-core` is the synchronous, dependency-conscious Rust foundation
-for composable business rules based on the Specification Pattern.
+for composable business rules based on the Specification Pattern. A
+`Specification<T>` evaluates a borrowed `T`; closures work directly as
+specifications and the `and`, `or`, and `not` methods construct statically
+dispatched, allocation-free rules.
 
-The public `Specification` API is introduced in P1-T2. This package currently
-exists to establish the compiler, documentation, quality, and publication
-contracts that implementation tasks will satisfy.
+```rust
+use specification_core::Specification;
+
+let is_positive = |value: &i32| *value > 0;
+assert!(is_positive.is_satisfied_by(&1));
+```

@@ -12,6 +12,7 @@
 | P0-T4 | [P0-T4_Toolchain_Quality_and_Release_Policy/](P0-T4_Toolchain_Quality_and_Release_Policy/) | 2026-07-10 | PASS |
 | P0-T5 | [P0-T5_Swift_Reference_Audit_and_Porting_Matrix/](P0-T5_Swift_Reference_Audit_and_Porting_Matrix/) | 2026-07-10 | PASS WITH REFERENCE BASELINE FAILURE RECORDED |
 | P1-T1 | [P1-T1_Bootstrap_Rust_Workspace/](P1-T1_Bootstrap_Rust_Workspace/) | 2026-07-10 | PASS WITH REMOTE CI PENDING |
+| P1-T2 | [P1-T2_Core_Specification_API/](P1-T2_Core_Specification_API/) | 2026-07-10 | PASS WITH REMOTE CI PENDING |
 
 ## Historical Artifacts
 
@@ -35,3 +36,5 @@
 | 2026-07-10 | P0-T5 | Archived REVIEW_p0_t5_swift_audit report (FOLLOW-UP skipped) |
 | 2026-07-10 | P1-T1 | Archived Bootstrap Rust Workspace (PASS WITH REMOTE CI PENDING) |
 | 2026-07-10 | P1-T1 | Archived REVIEW_p1_t1_workspace_ci report (FOLLOW-UP skipped) |
+| 2026-07-10 | P1-T2 | Archived Core Specification API (PASS WITH REMOTE CI PENDING) |
+| 2026-07-10 | P1-T2 | Archived REVIEW_p1_t2_core_specification_api report (FOLLOW-UP skipped) |

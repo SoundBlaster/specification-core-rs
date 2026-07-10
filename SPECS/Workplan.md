@@ -97,7 +97,7 @@ take precedence over source-level parity.
 - **Priority:** P0
 - **Dependencies:** P1-T1, P0-T5
 - **Parallelizable:** no
-- **Status:** Not Started
+- **Status:** Complete
 - **Acceptance Criteria:**
   - Closures can act as specifications
   - `and`, `or`, and `not` preserve short-circuit behavior

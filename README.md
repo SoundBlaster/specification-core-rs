@@ -1,7 +1,19 @@
 # specification-core-rs
 
-An idiomatic Rust implementation of the Specification Pattern. The project is
-currently establishing its synchronous core and public quality contract.
+An idiomatic Rust implementation of the Specification Pattern. The synchronous
+core evaluates borrowed candidates and composes concrete rules without dynamic
+dispatch or heap allocation.
+
+```rust
+use specification_core::Specification;
+
+let is_adult = |age: &u8| *age >= 18;
+let is_retired = |age: &u8| *age >= 65;
+let working_age = is_adult.and(is_retired.not());
+
+assert!(working_age.is_satisfied_by(&42));
+assert!(!working_age.is_satisfied_by(&70));
+```
 
 ## Development
 
