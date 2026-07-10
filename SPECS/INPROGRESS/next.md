@@ -4,7 +4,7 @@
 **Phase:** Extended Capabilities
 **Effort:** Medium
 **Dependencies:** P1-T4
-**Status:** Candidate
+**Status:** INPROGRESS
 
 ## Description
 
@@ -20,5 +20,5 @@ providers.
 
 ## Next Step
 
-Phase 1 is complete. Select P2-T1 only after the stacked Phase 1 pull requests
-have been merged and their remote CI results are recorded.
+Phase 1 is complete and its stacked pull requests are merged. Execute P2-T1
+through the complete Flow lifecycle before selecting P2-T2.
