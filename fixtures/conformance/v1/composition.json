@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "group": "composition",
+  "cases": [
+    {
+      "id": "and-short-circuits-after-false-left",
+      "candidate": 7,
+      "expression": {"op": "and", "left": {"op": "probe", "name": "left", "result": false}, "right": {"op": "probe", "name": "right", "result": true}},
+      "expected": {"result": false, "trace": ["left"]}
+    },
+    {
+      "id": "or-short-circuits-after-true-left",
+      "candidate": 7,
+      "expression": {"op": "or", "left": {"op": "probe", "name": "left", "result": true}, "right": {"op": "probe", "name": "right", "result": false}},
+      "expected": {"result": true, "trace": ["left"]}
+    },
+    {
+      "id": "not-negates-its-inner-result",
+      "candidate": 7,
+      "expression": {"op": "not", "inner": {"op": "probe", "name": "inner", "result": false}},
+      "expected": {"result": true, "trace": ["inner"]}
+    },
+    {
+      "id": "empty-all-of-is-true",
+      "candidate": 7,
+      "expression": {"op": "all_of", "items": []},
+      "expected": {"result": true, "trace": []}
+    },
+    {
+      "id": "empty-any-of-is-false",
+      "candidate": 7,
+      "expression": {"op": "any_of", "items": []},
+      "expected": {"result": false, "trace": []}
+    }
+  ]
+}

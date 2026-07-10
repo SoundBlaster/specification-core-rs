@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "group": "context",
+  "cases": [
+    {"id": "missing-counter-is-zero", "context": {}, "rule": {"op": "max_count", "key": "attempts", "maximum_count": 1}, "expected": {"result": true, "trace": []}},
+    {"id": "max-count-is-strictly-below-bound", "context": {"counters": {"attempts": 3}}, "rule": {"op": "max_count", "key": "attempts", "maximum_count": 3}, "expected": {"result": false, "trace": []}},
+    {"id": "missing-flag-is-false", "context": {}, "rule": {"op": "flag", "key": "enabled"}, "expected": {"result": false, "trace": []}},
+    {"id": "flag-reads-true-value", "context": {"flags": {"enabled": true}}, "rule": {"op": "flag", "key": "enabled"}, "expected": {"result": true, "trace": []}},
+    {"id": "missing-cooldown-timestamp-permits", "context": {"now_ms": 1000}, "rule": {"op": "cooldown", "key": "last_action", "duration_ms": 500}, "expected": {"result": true, "trace": []}},
+    {"id": "cooldown-includes-the-duration-boundary", "context": {"now_ms": 1000, "timestamps_ms": {"last_action": 500}}, "rule": {"op": "cooldown", "key": "last_action", "duration_ms": 500}, "expected": {"result": true, "trace": []}},
+    {"id": "future-timestamp-never-satisfies-cooldown", "context": {"now_ms": 1000, "timestamps_ms": {"last_action": 1001}}, "rule": {"op": "cooldown", "key": "last_action", "duration_ms": 0}, "expected": {"result": false, "trace": []}}
+  ]
+}
