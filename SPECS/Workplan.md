@@ -184,7 +184,7 @@ take precedence over source-level parity.
 - **Priority:** P1
 - **Dependencies:** P2-T1, P3-T1
 - **Parallelizable:** yes
-- **Status:** Not Started
+- **Status:** Complete
 - **Acceptance Criteria:**
   - Getting-started and design guides are complete
   - Examples compile in CI

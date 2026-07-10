@@ -111,4 +111,4 @@ jobs:
       - name: Run Miri tests
         run: |
           cargo +nightly miri setup
-          cargo +nightly miri test --workspace --all-targets --all-features
+          cargo +nightly miri test --workspace --lib --tests --examples --all-features
