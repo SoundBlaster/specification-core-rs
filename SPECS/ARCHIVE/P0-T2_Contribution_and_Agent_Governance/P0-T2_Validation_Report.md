@@ -19,11 +19,15 @@
 
 ```text
 git diff --check
-test -s AGENTS.md CONTRIBUTING.md SECURITY.md docs/contributing/governance.md
+for file in AGENTS.md CONTRIBUTING.md SECURITY.md docs/contributing/governance.md; do
+  test -s "$file"
+done
 rg -n 'Flow|idiomatic Rust|rustdoc|Managed Files|Security and Licensing' AGENTS.md
 rg -n 'MIT License|Third-Party|Security Issues|Pull Requests' CONTRIBUTING.md docs/contributing/governance.md
 rg -n 'Reporting a Vulnerability|Supported Versions|Security Boundaries' SECURITY.md
-test -f docs/project-charter.md docs/adr/README.md SPECS/COMMANDS/FLOW.md
+for file in docs/project-charter.md docs/adr/README.md SPECS/COMMANDS/FLOW.md; do
+  test -f "$file"
+done
 ```
 
 All commands completed successfully.
