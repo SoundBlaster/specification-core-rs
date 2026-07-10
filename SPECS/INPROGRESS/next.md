@@ -1,4 +1,4 @@
-# Next Task: P0-T3 — Documentation System and DocC Migration Plan
+# Next Task: P0-T4 — Toolchain, Quality, and Release Policy
 
 **Priority:** P0
 **Phase:** Project Foundations
@@ -8,10 +8,10 @@
 
 ## Description
 
-Establish the rustdoc and mdBook information architecture, the documentation
-style guide, and a traceable conversion plan for the Swift DocC corpus.
+Decide the Rust baseline, supported targets, quality gates, dependency and
+unsafe-code policy, and release policy that P1-T1 will implement.
 
 ## Next Step
 
-Start `FLOW.md` with BRANCH, then confirm P0-T3 during SELECT and generate its
+Start `FLOW.md` with BRANCH, then confirm P0-T4 during SELECT and generate its
 implementation-ready PRD during PLAN.
