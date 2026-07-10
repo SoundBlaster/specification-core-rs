@@ -13,9 +13,9 @@ available on [docs.rs](https://docs.rs/specification-core/0.1.0/specification_co
 
 ## Start here
 
-- [Getting Started](getting-started/README.md) — build and evaluate a first
+- [Getting Started](getting-started/) — build and evaluate a first
   rule in a few minutes.
-- [Core Concepts](concepts/README.md) — understand static composition,
+- [Core Concepts](concepts/) — understand static composition,
   allocation boundaries, and typed outcomes.
 - [Decisions and Evaluation Context](guides/decisions-context.md) — route
   candidates and evaluate counters, flags, and cooldowns.

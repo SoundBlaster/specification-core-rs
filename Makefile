@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := check
 
-.PHONY: check fmt-check lint test doctest docs release package coverage miri benchmark benchmark-build
+.PHONY: check fmt-check lint test doctest docs docs-links release package coverage miri benchmark benchmark-build
 
 check: fmt-check lint test doctest docs release
 
@@ -20,6 +20,12 @@ docs:
 	RUSTDOCFLAGS="-D warnings" cargo doc --workspace --all-features --no-deps
 	mdbook test docs
 	mdbook build docs
+	mkdir -p target/mdbook/api
+	cp -R target/doc/. target/mdbook/api/
+	cp docs/api/index.html target/mdbook/api/index.html
+
+docs-links: docs
+	lychee --offline --scheme file --root-dir target/mdbook --index-files index.html,. 'target/mdbook/**/*.html'
 
 release:
 	cargo build --workspace --release
