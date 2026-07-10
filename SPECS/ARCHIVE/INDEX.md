@@ -11,6 +11,7 @@
 | P0-T3 | [P0-T3_Documentation_System_and_DocC_Migration_Plan/](P0-T3_Documentation_System_and_DocC_Migration_Plan/) | 2026-07-10 | PASS WITH DEFERRED TOOL GATE |
 | P0-T4 | [P0-T4_Toolchain_Quality_and_Release_Policy/](P0-T4_Toolchain_Quality_and_Release_Policy/) | 2026-07-10 | PASS |
 | P0-T5 | [P0-T5_Swift_Reference_Audit_and_Porting_Matrix/](P0-T5_Swift_Reference_Audit_and_Porting_Matrix/) | 2026-07-10 | PASS WITH REFERENCE BASELINE FAILURE RECORDED |
+| P1-T1 | [P1-T1_Bootstrap_Rust_Workspace/](P1-T1_Bootstrap_Rust_Workspace/) | 2026-07-10 | PASS WITH REMOTE CI PENDING |
 
 ## Historical Artifacts
 
@@ -32,3 +33,4 @@
 | 2026-07-10 | P0-T4 | Archived REVIEW_p0_t4_toolchain_policy report (FOLLOW-UP skipped) |
 | 2026-07-10 | P0-T5 | Archived Swift Reference Audit and Porting Matrix (PASS WITH REFERENCE BASELINE FAILURE RECORDED) |
 | 2026-07-10 | P0-T5 | Archived REVIEW_p0_t5_swift_audit report (FOLLOW-UP skipped) |
+| 2026-07-10 | P1-T1 | Archived Bootstrap Rust Workspace (PASS WITH REMOTE CI PENDING) |

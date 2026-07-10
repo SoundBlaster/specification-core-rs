@@ -84,7 +84,7 @@ take precedence over source-level parity.
 - **Priority:** P0
 - **Dependencies:** P0-T2, P0-T3, P0-T4
 - **Parallelizable:** no
-- **Status:** INPROGRESS
+- **Status:** Complete
 - **Acceptance Criteria:**
   - Cargo workspace contains the `specification-core` library crate
   - Formatting, Clippy, tests, and rustdoc gates pass locally
