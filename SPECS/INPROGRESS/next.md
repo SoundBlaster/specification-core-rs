@@ -4,7 +4,7 @@
 **Phase:** Compatibility and Release
 **Effort:** High
 **Dependencies:** P2-T2, P3-T2
-**Status:** Candidate
+**Status:** INPROGRESS
 
 ## Description
 
@@ -24,5 +24,5 @@ Validate packaging and prepare the first public crate release.
 
 ## Next Step
 
-Select P3-T3 to prepare the 0.1.0 release gate. Publishing, tags, and the
+P3-T3 is active. Prepare the 0.1.0 release gate. Publishing, tags, and the
 GitHub Release require explicit confirmation after preparation is complete.
