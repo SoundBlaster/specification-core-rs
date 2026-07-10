@@ -10,4 +10,4 @@ build-dir = "../target/mdbook"
 
 [output.html]
 git-repository-url = "https://github.com/SoundBlaster/specification-core-rs"
-edit-url-template = "https://github.com/SoundBlaster/specification-core-rs/edit/main/{path}"
+edit-url-template = "https://github.com/SoundBlaster/specification-core-rs/edit/main/docs/{path}"

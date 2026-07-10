@@ -1,8 +1,10 @@
-# Swift DocC Migration Map
+# Swift DocC Migration Map (Maintainer Reference)
 
 The Swift `SpecificationCore` DocC corpus is conceptual source material. This
-map records an explicit Rust destination or exclusion for every authored DocC
-article and tutorial. It does not promise source-level API compatibility.
+historical map records an explicit Rust destination or exclusion for every
+authored DocC article and tutorial. The reader-facing comparison is
+[Swift to Rust](swift-to-rust.md); this page is traceability data and does not
+promise source-level API compatibility.
 
 For executable-source evidence and adopt/adapt/defer/exclude decisions, see the
 [Swift reference audit](swift-reference-audit.md).
@@ -16,7 +18,7 @@ For executable-source evidence and adopt/adapt/defer/exclude decisions, see the
 | `SpecificationOperators.md` | combinator rustdoc and getting-started | Adapt operators to Rust ergonomics |
 | `AnySpecification.md` | dynamic-dispatch rustdoc and concepts | Adapt type erasure to explicit trait objects |
 | `DecisionSpec.md` | decision rustdoc and concepts | Preserve ordered typed decision rationale |
-| `AsyncSpecification.md` | async specification guide and rustdoc | Adapt to runtime-neutral RPITIT futures and explicit Send bounds |
+| `AsyncSpecification.md` | async specification guide and rustdoc | Implemented as runtime-neutral RPITIT futures with explicit Send bounds |
 | `ContextProviding.md` | context rustdoc and concepts | Adapt provider model to dependency injection |
 
 ## Context and Built-in Specification Articles
@@ -29,10 +31,10 @@ For executable-source evidence and adopt/adapt/defer/exclude decisions, see the
 | `PredicateSpec.md` | core rustdoc | Use closure implementation when appropriate |
 | `FirstMatchSpec.md` | decision rustdoc and example | Preserve deterministic priority behavior |
 | `MaxCountSpec.md` | built-in rules guide | Rewrite against Rust context API |
-| `CooldownIntervalSpec.md` | time-rule guide | Defer until clock policy is implemented |
-| `TimeSinceEventSpec.md` | time-rule guide | Defer until clock policy is implemented |
-| `DateRangeSpec.md` | time-rule guide | Defer until time representation is chosen |
-| `DateComparisonSpec.md` | time-rule guide | Defer until time representation is chosen |
+| `CooldownIntervalSpec.md` | decisions/context guide | Implemented with an injected `Clock` and `Duration` |
+| `TimeSinceEventSpec.md` | no Rust 0.1.0 equivalent | Not ported; application-owned rule |
+| `DateRangeSpec.md` | no Rust 0.1.0 equivalent | Not ported; application-owned rule |
+| `DateComparisonSpec.md` | no Rust 0.1.0 equivalent | Not ported; application-owned rule |
 
 ## Swift-specific Declarative Articles
 
@@ -42,7 +44,7 @@ For executable-source evidence and adopt/adapt/defer/exclude decisions, see the
 | `AsyncSatisfies.md` | async specification guide | Rewrite as explicit future evaluation; executor remains caller-owned |
 | `Decides.md` | decision guide | Adapt to ordinary Rust values/functions |
 | `Maybe.md` | decision guide | Adapt optional decisions to `Option` |
-| `SpecsMacro.md` | serialization and macros guide | Adapt to explicit predicate macro in a separate crate |
+| `SpecsMacro.md` | serialization and macros guide | Implemented as an explicit predicate macro in a separate crate |
 | `AutoContextMacro.md` | serialization and macros guide | Exclude implicit context; retain explicit dependency injection |
 
 ## Tutorials

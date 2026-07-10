@@ -8,6 +8,9 @@ Use `SharedSpecification<T>` when a rule must cross a thread boundary. Its
 constructor requires the concrete rule to be `Send + Sync + 'static`, and its
 cloneable wrapper uses an `Arc` internally:
 
+The complete runnable version is
+[`dynamic_and_concurrency.rs`](https://github.com/SoundBlaster/specification-core-rs/blob/main/crates/specification-core/examples/dynamic_and_concurrency.rs).
+
 The following snippet is illustrative in mdBook (the book test runner does not
 link standalone blocks against the workspace crate); the equivalent rustdoc
 example is compiled by Cargo's doctest gate.

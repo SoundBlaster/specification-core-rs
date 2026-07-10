@@ -1,4 +1,7 @@
-# Swift Reference Audit and Rust Porting Matrix
+# Swift Reference Audit and Rust Porting Matrix (Maintainer Reference)
+
+> Historical planning artifact from Phase 0. For the current public migration
+> walkthrough, use [Swift to Rust](swift-to-rust.md).
 
 **Audited source:** `SoundBlaster/SpecificationCore`
 

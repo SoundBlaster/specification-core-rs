@@ -204,6 +204,25 @@ take precedence over source-level parity.
 
 ---
 
+## Phase 4: Documentation Editorial Quality
+
+#### P4-T1: Documentation Editorial Rewrite
+- **Description:** Convert the mechanically complete documentation set into a reader-first 0.1.0 guide with a coherent learning path, executable companion examples, discoverable API reference, and an explicit Swift-to-Rust migration walkthrough.
+- **Priority:** P1
+- **Dependencies:** P3-T3
+- **Parallelizable:** no
+- **Status:** Complete
+- **Acceptance Criteria:**
+  - Landing page and Getting Started describe the released 0.1.0 state without stale future-work claims
+  - A single domain example explains static composition, dynamic dispatch, typed decisions, immutable context, and injected time
+  - Async, serialization, macros, concurrency, and Swift migration each have concrete examples or links to runnable examples
+  - Cargo examples and rustdoc remain the executable validation sources; docs clearly identify illustrative snippets
+  - GitHub Pages links to the published API reference and includes a reader-first navigation separate from maintainer audit material
+  - Pages workflow publishes or links the API reference, fixes edit links, and passes the repository quality gates
+  - Review report confirms no stale claims, broken navigation, or undocumented public workflow remains in the user path
+
+---
+
 ## Task Status Legend
 
 - **Not Started** — task is available or waiting on dependencies

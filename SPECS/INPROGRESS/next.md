@@ -1,15 +1,11 @@
-# Next Step: Publish 0.1.0
+# Next Step: Select Post-release Improvement
 
-**Priority:** P1
-**Phase:** Compatibility and Release
-**Effort:** High
-**Dependencies:** P2-T2, P3-T2
-**Status:** Awaiting maintainer confirmation
+**Status:** Awaiting task selection
 
 ## Description
 
-Release preparation is complete. Publish the prepared 0.1.0 crates only after
-explicit maintainer confirmation.
+P4-T1 passed implementation validation, structured review, and review archival.
+The next post-release improvement should be selected from the Workplan.
 
 ## Recently Archived
 
@@ -23,9 +19,8 @@ explicit maintainer confirmation.
 - P3-T1 — Cross-language Conformance Fixtures (PASS, 2026-07-10)
 - P3-T2 — Documentation Completion and Benchmarks (PASS, 2026-07-10)
 - P3-T3 — Publish 0.1.0 (PASS — RELEASE PREPARATION COMPLETE, 2026-07-10)
+- P4-T1 — Documentation Editorial Rewrite (PASS, 2026-07-10)
 
 ## Next Step
 
-After explicit confirmation, publish `specification-core`,
-`specification-core-serde`, and `specification-core-macros` in that order,
-then create tag `v0.1.0` and its GitHub Release.
+Select the next post-release improvement through the Flow SELECT step.

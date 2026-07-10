@@ -13,7 +13,6 @@
 
 # Guides
 
-- [Documentation and Testing](guides/README.md)
 - [Async Specifications](guides/async.md)
 - [Serialization and Macros](guides/serialization-macros.md)
 - [Cross-language Conformance](guides/conformance.md)
@@ -22,6 +21,11 @@
 
 # Migration from Swift
 
+- [Swift to Rust](migration/swift-to-rust.md)
+
+# Maintainer Reference
+
+- [Documentation and Testing](guides/README.md)
 - [DocC Migration Map](migration/swift-docc-map.md)
 - [Swift Reference Audit](migration/swift-reference-audit.md)
 
