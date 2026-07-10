@@ -92,8 +92,9 @@ must later be promoted into the project charter or individual ADRs.
 
 ## Resolved by P0-T5
 
-- The Swift source at revision `7909e62` is the initial behavioral reference,
-  with its current build defect explicitly excluded from Rust requirements.
+- [ADR-0003](../adr/0003-establish-swift-behavioral-reference.md) establishes
+  revision `7909e62` as the initial behavioral reference and excludes its
+  current build defect from Rust requirements.
 - P1-T2 is limited to the synchronous boolean core; decisions, context, time,
   async, wrappers, macros, and dynamic dispatch remain in later tasks.
 - Source and documentation compatibility are evaluated through the porting

@@ -118,7 +118,7 @@ inherited by the Rust core merely because they appear in the Swift manifest.
 
 ## Relationship to Documentation Migration
 
-The [DocC migration map](../src/migration/swift-docc-map.md) tracks authored
+The [DocC migration map](swift-docc-map.md) tracks authored
 documentation destinations. This audit tracks executable behavior and source
 classification. Both documents must be consulted before a Rust feature is
 declared compatible with Swift.

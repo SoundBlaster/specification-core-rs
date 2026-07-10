@@ -5,7 +5,7 @@ map records an explicit Rust destination or exclusion for every authored DocC
 article and tutorial. It does not promise source-level API compatibility.
 
 For executable-source evidence and adopt/adapt/defer/exclude decisions, see the
-[Swift reference audit](../../migration/swift-reference-audit.md).
+[Swift reference audit](swift-reference-audit.md).
 
 ## Overview and Core API Articles
 

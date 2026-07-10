@@ -25,3 +25,4 @@ or release process. Do not write one for a reversible local refactor.
 
 - [ADR-0001: Adopt Rust 2024 and MSRV 1.85](0001-adopt-rust-2024-and-msrv-1-85.md)
 - [ADR-0002: Adopt Core Safety and Quality Policy](0002-adopt-core-safety-and-quality-policy.md)
+- [ADR-0003: Establish Swift Behavioral Reference](0003-establish-swift-behavioral-reference.md)

@@ -17,6 +17,7 @@
 # Migration from Swift
 
 - [DocC Migration Map](migration/swift-docc-map.md)
+- [Swift Reference Audit](migration/swift-reference-audit.md)
 
 # Design
 
