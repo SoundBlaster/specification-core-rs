@@ -16,7 +16,7 @@
 //! assert!(!eligible.is_satisfied_by(&70));
 //! ```
 
-use std::{collections::BTreeMap, sync::Arc, time::Duration};
+use std::{collections::BTreeMap, future::Future, pin::Pin, sync::Arc, time::Duration};
 
 /// A deterministic boolean rule over a borrowed candidate.
 ///
@@ -72,6 +72,197 @@ where
 {
     fn is_satisfied_by(&self, candidate: &T) -> bool {
         self(candidate)
+    }
+}
+
+/// A runtime-neutral asynchronous rule over a borrowed, `Sync` candidate.
+///
+/// The returned future is `Send`, so callers may hand it to an executor that
+/// moves work between threads. This trait uses return-position `impl Future`
+/// and is therefore not directly dyn-compatible; use
+/// [`BoxedAsyncSpecification`] when object-safe dynamic dispatch is required.
+/// No executor or async runtime is selected by this API.
+///
+/// ```compile_fail
+/// use specification_core::AsyncSpecification;
+///
+/// fn accepts_dynamic(_: &dyn AsyncSpecification<i32, Error = &'static str>) {}
+/// ```
+pub trait AsyncSpecification<T: ?Sized + Sync>: Sync {
+    /// The typed error produced by asynchronous evaluation.
+    type Error: Send;
+
+    /// Evaluates the rule and returns a `Send` future with a typed result.
+    fn is_satisfied_by<'candidate>(
+        &'candidate self,
+        candidate: &'candidate T,
+    ) -> impl Future<Output = Result<bool, Self::Error>> + Send + 'candidate;
+
+    /// Combines this rule with `other` using asynchronous short-circuiting AND.
+    fn and<Other>(self, other: Other) -> AsyncAnd<Self, Other>
+    where
+        Self: Sized,
+        Other: AsyncSpecification<T, Error = Self::Error>,
+    {
+        AsyncAnd {
+            left: self,
+            right: other,
+        }
+    }
+
+    /// Combines this rule with `other` using asynchronous short-circuiting OR.
+    fn or<Other>(self, other: Other) -> AsyncOr<Self, Other>
+    where
+        Self: Sized,
+        Other: AsyncSpecification<T, Error = Self::Error>,
+    {
+        AsyncOr {
+            left: self,
+            right: other,
+        }
+    }
+
+    /// Creates an asynchronous rule that negates this rule's result.
+    fn not(self) -> AsyncNot<Self>
+    where
+        Self: Sized,
+    {
+        AsyncNot { inner: self }
+    }
+}
+
+/// An asynchronous specification that requires both operands to succeed.
+pub struct AsyncAnd<Left, Right> {
+    left: Left,
+    right: Right,
+}
+
+impl<T: ?Sized + Sync, Left, Right> AsyncSpecification<T> for AsyncAnd<Left, Right>
+where
+    Left: AsyncSpecification<T>,
+    Right: AsyncSpecification<T, Error = Left::Error>,
+{
+    type Error = Left::Error;
+
+    #[allow(clippy::manual_async_fn)]
+    fn is_satisfied_by<'candidate>(
+        &'candidate self,
+        candidate: &'candidate T,
+    ) -> impl Future<Output = Result<bool, Self::Error>> + Send + 'candidate {
+        async move {
+            if !self.left.is_satisfied_by(candidate).await? {
+                return Ok(false);
+            }
+            self.right.is_satisfied_by(candidate).await
+        }
+    }
+}
+
+/// An asynchronous specification that accepts either operand.
+pub struct AsyncOr<Left, Right> {
+    left: Left,
+    right: Right,
+}
+
+impl<T: ?Sized + Sync, Left, Right> AsyncSpecification<T> for AsyncOr<Left, Right>
+where
+    Left: AsyncSpecification<T>,
+    Right: AsyncSpecification<T, Error = Left::Error>,
+{
+    type Error = Left::Error;
+
+    #[allow(clippy::manual_async_fn)]
+    fn is_satisfied_by<'candidate>(
+        &'candidate self,
+        candidate: &'candidate T,
+    ) -> impl Future<Output = Result<bool, Self::Error>> + Send + 'candidate {
+        async move {
+            if self.left.is_satisfied_by(candidate).await? {
+                return Ok(true);
+            }
+            self.right.is_satisfied_by(candidate).await
+        }
+    }
+}
+
+/// An asynchronous specification that negates another specification.
+pub struct AsyncNot<Inner> {
+    inner: Inner,
+}
+
+impl<T: ?Sized + Sync, Inner> AsyncSpecification<T> for AsyncNot<Inner>
+where
+    Inner: AsyncSpecification<T>,
+{
+    type Error = Inner::Error;
+
+    #[allow(clippy::manual_async_fn)]
+    fn is_satisfied_by<'candidate>(
+        &'candidate self,
+        candidate: &'candidate T,
+    ) -> impl Future<Output = Result<bool, Self::Error>> + Send + 'candidate {
+        async move {
+            self.inner
+                .is_satisfied_by(candidate)
+                .await
+                .map(|result| !result)
+        }
+    }
+}
+
+/// A boxed `Send` future used by the object-safe asynchronous adapter.
+pub type BoxFuture<'future, Error> =
+    Pin<Box<dyn Future<Output = Result<bool, Error>> + Send + 'future>>;
+
+trait DynAsyncSpecification<T: ?Sized + Sync, Error>: Send + Sync {
+    fn evaluate<'candidate>(
+        &'candidate self,
+        candidate: &'candidate T,
+    ) -> BoxFuture<'candidate, Error>;
+}
+
+impl<T: ?Sized + Sync, Error, Concrete> DynAsyncSpecification<T, Error> for Concrete
+where
+    Concrete: AsyncSpecification<T, Error = Error> + Send + Sync,
+{
+    fn evaluate<'candidate>(
+        &'candidate self,
+        candidate: &'candidate T,
+    ) -> BoxFuture<'candidate, Error> {
+        Box::pin(self.is_satisfied_by(candidate))
+    }
+}
+
+/// An explicitly type-erased asynchronous specification.
+///
+/// This is the object-safe boundary for [`AsyncSpecification`]. Construction
+/// requires `Send + Sync + 'static`; the adapter allocates one boxed future per
+/// evaluation, while static async composition keeps its concrete future type.
+pub struct BoxedAsyncSpecification<T: ?Sized + Sync, Error: Send> {
+    inner: Box<dyn DynAsyncSpecification<T, Error>>,
+}
+
+impl<T: ?Sized + Sync, Error: Send> BoxedAsyncSpecification<T, Error> {
+    /// Erases and owns a `Send + Sync` asynchronous specification.
+    pub fn new<Concrete>(specification: Concrete) -> Self
+    where
+        Concrete: AsyncSpecification<T, Error = Error> + Send + Sync + 'static,
+    {
+        Self {
+            inner: Box::new(specification),
+        }
+    }
+}
+
+impl<T: ?Sized + Sync, Error: Send> AsyncSpecification<T> for BoxedAsyncSpecification<T, Error> {
+    type Error = Error;
+
+    #[allow(clippy::manual_async_fn)]
+    fn is_satisfied_by<'candidate>(
+        &'candidate self,
+        candidate: &'candidate T,
+    ) -> impl Future<Output = Result<bool, Self::Error>> + Send + 'candidate {
+        self.inner.evaluate(candidate)
     }
 }
 
@@ -500,18 +691,20 @@ where
 #[cfg(test)]
 mod tests {
     use std::cell::Cell;
+    use std::future::{Future, ready};
     use std::rc::Rc;
     use std::sync::{
         Arc,
         atomic::{AtomicUsize, Ordering},
     };
+    use std::task::{Context, Poll, Waker};
     use std::thread;
     use std::time::Duration;
 
     use super::{
-        AllOf, Always, AnyOf, BoxedSpecification, Clock, Cooldown, DecisionSpecification,
-        EvaluationContext, FirstMatch, FixedClock, Flag, MaxCount, Never, SharedSpecification,
-        Specification,
+        AllOf, Always, AnyOf, AsyncSpecification, BoxedAsyncSpecification, BoxedSpecification,
+        Clock, Cooldown, DecisionSpecification, EvaluationContext, FirstMatch, FixedClock, Flag,
+        MaxCount, Never, SharedSpecification, Specification,
     };
 
     fn assert_send_sync<T: Send + Sync>() {}
@@ -538,6 +731,50 @@ mod tests {
         fn is_satisfied_by(&self, _: &i32) -> bool {
             self.evaluations.set(self.evaluations.get() + 1);
             self.result
+        }
+    }
+
+    #[derive(Clone)]
+    struct ImmediateAsyncSpecification {
+        result: Result<bool, &'static str>,
+        evaluations: Arc<AtomicUsize>,
+    }
+
+    impl ImmediateAsyncSpecification {
+        fn new(result: Result<bool, &'static str>) -> Self {
+            Self {
+                result,
+                evaluations: Arc::new(AtomicUsize::new(0)),
+            }
+        }
+
+        fn counter(&self) -> Arc<AtomicUsize> {
+            Arc::clone(&self.evaluations)
+        }
+    }
+
+    impl AsyncSpecification<i32> for ImmediateAsyncSpecification {
+        type Error = &'static str;
+
+        fn is_satisfied_by<'candidate>(
+            &'candidate self,
+            _: &'candidate i32,
+        ) -> impl Future<Output = Result<bool, Self::Error>> + Send + 'candidate {
+            self.evaluations.fetch_add(1, Ordering::Relaxed);
+            ready(self.result)
+        }
+    }
+
+    fn block_on<F: Future>(future: F) -> F::Output {
+        let waker = Waker::noop();
+        let mut context = Context::from_waker(waker);
+        let mut future = std::pin::pin!(future);
+
+        loop {
+            match future.as_mut().poll(&mut context) {
+                Poll::Ready(output) => return output,
+                Poll::Pending => std::thread::yield_now(),
+            }
         }
     }
 
@@ -682,6 +919,51 @@ mod tests {
         for handle in handles {
             assert_eq!(handle.join().expect("worker thread should finish"), 500);
         }
+    }
+
+    #[test]
+    fn async_and_short_circuits_and_propagates_errors() {
+        let left = ImmediateAsyncSpecification::new(Ok(false));
+        let right = ImmediateAsyncSpecification::new(Err("right"));
+        let right_evaluations = right.counter();
+        let specification = left.and(right);
+
+        assert_eq!(block_on(specification.is_satisfied_by(&0)), Ok(false));
+        assert_eq!(right_evaluations.load(Ordering::Relaxed), 0);
+
+        let failing_left = ImmediateAsyncSpecification::new(Err("left"));
+        let successful_right = ImmediateAsyncSpecification::new(Ok(true));
+        let successful_right_evaluations = successful_right.counter();
+        let specification = failing_left.and(successful_right);
+
+        assert_eq!(block_on(specification.is_satisfied_by(&0)), Err("left"));
+        assert_eq!(successful_right_evaluations.load(Ordering::Relaxed), 0);
+    }
+
+    #[test]
+    fn async_or_short_circuits_and_async_not_negates() {
+        let left = ImmediateAsyncSpecification::new(Ok(true));
+        let right = ImmediateAsyncSpecification::new(Err("right"));
+        let right_evaluations = right.counter();
+        let specification = left.or(right);
+
+        assert_eq!(block_on(specification.is_satisfied_by(&0)), Ok(true));
+        assert_eq!(right_evaluations.load(Ordering::Relaxed), 0);
+
+        let specification = ImmediateAsyncSpecification::new(Ok(false)).not();
+        assert_eq!(block_on(specification.is_satisfied_by(&0)), Ok(true));
+
+        let specification = ImmediateAsyncSpecification::new(Err("failure")).not();
+        assert_eq!(block_on(specification.is_satisfied_by(&0)), Err("failure"));
+    }
+
+    #[test]
+    fn boxed_async_specification_is_an_explicit_dynamic_boundary() {
+        assert_send_sync::<BoxedAsyncSpecification<i32, &'static str>>();
+        let specification =
+            BoxedAsyncSpecification::new(ImmediateAsyncSpecification::new(Ok(true)));
+
+        assert_eq!(block_on(specification.is_satisfied_by(&0)), Ok(true));
     }
 
     #[derive(Clone)]

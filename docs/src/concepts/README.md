@@ -37,6 +37,10 @@ already own a clock abstraction.
 See [Concurrency Contracts](concurrency.md) for the explicit `Send + Sync`
 boundary, immutable context behavior, and dependency-injected providers.
 
+The runtime-neutral async layer is described in [Async
+Specifications](../guides/async.md); it keeps async evaluation separate from
+executor selection.
+
 The project prioritizes typed evaluation data, explicit ownership, visible
 concurrency contracts, and runtime-neutral design. Detailed API semantics are
 published in rustdoc as implementation tasks complete.
