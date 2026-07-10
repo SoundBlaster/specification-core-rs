@@ -1,23 +1,24 @@
-# Next Task: P1-T4 — Evaluation Context and Built-ins
+# Next Task: P2-T1 — Concurrency Contracts
 
 **Priority:** P1
-**Phase:** Foundation
+**Phase:** Extended Capabilities
 **Effort:** Medium
-**Dependencies:** P1-T3
+**Dependencies:** P1-T4
 **Status:** Candidate
 
 ## Description
 
-Add a typed immutable evaluation context and deterministic counter, flag, and
-time specifications with injected clock/context dependencies.
+Define and validate thread-safety guarantees for specifications and context
+providers.
 
 ## Recently Archived
 
 - P1-T1 — Bootstrap Rust Workspace (PASS WITH REMOTE CI PENDING, 2026-07-10)
 - P1-T2 — Core Specification API (PASS WITH REMOTE CI PENDING, 2026-07-10)
 - P1-T3 — Dynamic Specifications and Decisions (PASS WITH REMOTE CI PENDING, 2026-07-10)
+- P1-T4 — Evaluation Context and Built-ins (PASS WITH REMOTE CI PENDING, 2026-07-10)
 
 ## Next Step
 
-Select P1-T4 after the P1-T3 stacked pull request is open and its GitHub
-Actions results have been inspected.
+Phase 1 is complete. Select P2-T1 only after the stacked Phase 1 pull requests
+have been merged and their remote CI results are recorded.

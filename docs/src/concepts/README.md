@@ -22,6 +22,18 @@ decision, and otherwise returns `None` (or an explicitly supplied fallback).
 This keeps dynamic rule selection visible while preserving strongly typed
 business outcomes.
 
+## Evaluation context and built-ins
+
+`EvaluationContext<UserData>` is immutable after construction and keeps
+application data in its generic `UserData` parameter. Counters, flags, and
+timestamps are optional inputs with deliberate defaults: missing counters are
+zero and missing flags are false.
+
+`MaxCount` uses the strict rule `counter < maximum`. `Flag` checks a named
+true flag. `Cooldown` receives a `Clock` explicitly; `FixedClock` makes the
+boundary `elapsed >= duration` deterministic in tests and in applications that
+already own a clock abstraction.
+
 The project prioritizes typed evaluation data, explicit ownership, visible
 concurrency contracts, and runtime-neutral design. Detailed API semantics are
 published in rustdoc as implementation tasks complete.
