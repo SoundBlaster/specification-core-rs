@@ -5,6 +5,6 @@ The first implementation milestone introduces an idiomatic synchronous
 that API exists, this chapter will provide installation, first-specification,
 composition, and built-in-rule tutorials.
 
-Until then, the [project charter](../../project-charter.md) defines the public
-scope and the [architecture baseline](../design/architecture.md) explains the
-intended crate boundaries.
+Until then, the [project charter](https://github.com/SoundBlaster/specification-core-rs/blob/main/docs/project-charter.md)
+defines the public scope and the [architecture baseline](../design/architecture.md)
+explains the intended crate boundaries.
