@@ -40,10 +40,30 @@ mdbook build docs
 mdbook test docs
 ```
 
-Coverage is measured with `cargo llvm-cov`. P1-T1 provisions the measurement
-path; P1-T2 enables a line-coverage gate of at least 90% for the core crate once
-the first behavior exists. A temporary exception needs a tracked task with a
-reason and expiry.
+Coverage uses `cargo llvm-cov`. P1-T1 validates the instrumented test path with
+`--no-report`, because a bootstrap crate with no behavior produces no coverage
+profile. P1-T2 replaces that bootstrap command with a core line-coverage gate
+of at least 90% once executable behavior exists. A temporary exception needs a
+tracked task with a reason and expiry.
+
+## CI Parity with the Swift Reference
+
+The original Swift package verifies multiple Apple toolchains, multiple Linux
+Swift versions, formatting, release builds, Thread Sanitizer, and DocC Pages.
+The Rust workflow preserves the same quality intent with Rust-native checks:
+
+| Swift reference gate | Rust equivalent |
+|---|---|
+| macOS test matrix | stable Rust tests on macOS |
+| Linux Swift-version matrix | Rust 1.85 MSRV and stable tests on Linux |
+| Platform coverage | stable Rust tests on Linux, macOS, and Windows |
+| SwiftFormat | rustfmt and Clippy with warnings denied |
+| Thread Sanitizer | nightly Miri test job |
+| Release build | Cargo release build and package verification |
+| DocC build and Pages deployment | mdBook/rustdoc build, doctests, and Pages deployment |
+
+The Rust matrix intentionally adds Windows and coverage instrumentation because
+the core crate is platform-neutral and has an explicit coverage rollout policy.
 
 ## Dependencies and Features
 

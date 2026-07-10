@@ -1,0 +1,15 @@
+[package]
+name = "specification-core"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+description = "Composable, strongly typed specifications for Rust"
+readme = "README.md"
+keywords = ["business-rules", "domain-driven-design", "specification"]
+categories = ["development-tools", "rust-patterns"]
+
+[lints]
+workspace = true

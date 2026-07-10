@@ -9,9 +9,12 @@ project:
   default_branch: main
 
 verify:
-  tests: cargo test --workspace --all-features
-  lint: cargo clippy --workspace --all-targets --all-features -- -D warnings
-  format: cargo fmt --all --check
+  tests: make test
+  lint: make lint
+  format: make fmt-check
+  docs: make docs
+  coverage: make coverage
+  coverage_threshold: 90
 
 task_system:
   kind: file
