@@ -11,5 +11,8 @@ readme = "README.md"
 keywords = ["business-rules", "domain-driven-design", "specification"]
 categories = ["development-tools", "rust-patterns"]
 
+[dev-dependencies]
+serde_json = "1.0"
+
 [lints]
 workspace = true

@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "fixtures": [
+    "composition.json",
+    "first-match.json",
+    "context.json"
+  ]
+}

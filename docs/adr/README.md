@@ -29,3 +29,4 @@ or release process. Do not write one for a reversible local refactor.
 - [ADR-0004: Explicit Concurrency Contracts](0004-explicit-concurrency-contracts.md)
 - [ADR-0005: Runtime-Neutral Async Specifications](0005-runtime-neutral-async-specifications.md)
 - [ADR-0006: Optional Serialization and Macro Boundaries](0006-optional-serialization-and-macro-boundaries.md)
+- [ADR-0007: Versioned Cross-language Conformance Fixtures](0007-versioned-cross-language-conformance-fixtures.md)

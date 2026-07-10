@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "group": "first_match",
+  "cases": [
+    {
+      "id": "first-satisfied-rule-wins",
+      "candidate": 7,
+      "rules": [{"name": "first", "result": true, "decision": "primary"}, {"name": "later", "result": true, "decision": "secondary"}],
+      "fallback": "fallback",
+      "expected": {"decision": "primary", "trace": ["first"]}
+    },
+    {
+      "id": "no-match-uses-fallback",
+      "candidate": 7,
+      "rules": [{"name": "first", "result": false, "decision": "primary"}, {"name": "second", "result": false, "decision": "secondary"}],
+      "fallback": "fallback",
+      "expected": {"decision": "fallback", "trace": ["first", "second"]}
+    },
+    {
+      "id": "no-match-has-no-optional-decision",
+      "candidate": 7,
+      "rules": [],
+      "expected": {"decision": null, "trace": []}
+    }
+  ]
+}

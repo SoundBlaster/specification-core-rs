@@ -16,6 +16,7 @@
 - [Documentation and Testing](guides/README.md)
 - [Async Specifications](guides/async.md)
 - [Serialization and Macros](guides/serialization-macros.md)
+- [Cross-language Conformance](guides/conformance.md)
 
 # Migration from Swift
 
