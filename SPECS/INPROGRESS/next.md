@@ -4,7 +4,7 @@
 **Phase:** Extended Capabilities
 **Effort:** High
 **Dependencies:** P2-T1
-**Status:** Candidate
+**Status:** INPROGRESS
 
 ## Description
 
@@ -21,5 +21,6 @@ stabilizes.
 
 ## Next Step
 
-P2-T1 is complete. Select P2-T2 and resolve its async API/object-safety design
-before implementation; keep the core runtime-neutral and dependency-conscious.
+P2-T1 is complete. Execute P2-T2 through the complete Flow lifecycle. Keep the
+core runtime-neutral and dependency-conscious; resolve object-safety and Send
+semantics before implementation.
