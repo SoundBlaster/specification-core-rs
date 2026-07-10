@@ -4,7 +4,7 @@
 **Phase:** Foundation
 **Effort:** Medium
 **Dependencies:** P1-T2
-**Status:** Candidate
+**Status:** Selected
 
 ## Description
 
@@ -18,5 +18,4 @@ evaluation on top of the static core.
 
 ## Next Step
 
-Select P1-T3 after the P1-T2 stacked pull request is open and its GitHub
-Actions results have been inspected.
+Create the implementation-ready PRD during PLAN.
