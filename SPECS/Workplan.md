@@ -147,7 +147,7 @@ take precedence over source-level parity.
 - **Priority:** P1
 - **Dependencies:** P2-T1
 - **Parallelizable:** no
-- **Status:** INPROGRESS
+- **Status:** Complete
 - **Acceptance Criteria:**
   - Public API does not require a specific async runtime
   - Object-safety and `Send` behavior are documented

@@ -74,3 +74,7 @@ package verification. Capture results in `P2-T2_Validation_Report.md`.
 
 Public docs remain technical English. Do not claim a built-in executor,
 cancellation runtime, or automatic Swift property-wrapper equivalent.
+
+---
+**Archived:** 2026-07-10
+**Verdict:** PASS

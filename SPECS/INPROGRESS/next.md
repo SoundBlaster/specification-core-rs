@@ -1,15 +1,15 @@
-# Next Task: P2-T2 — Async Specifications
+# Next Task: P2-T3 — Serialization and Macros Evaluation
 
-**Priority:** P1
+**Priority:** P2
 **Phase:** Extended Capabilities
 **Effort:** High
-**Dependencies:** P2-T1
-**Status:** INPROGRESS
+**Dependencies:** P1-T4
+**Status:** Candidate
 
 ## Description
 
-Design a runtime-neutral async specification API after the synchronous API
-stabilizes.
+Prototype optional serialization and procedural macros, retaining only
+features with demonstrated ergonomic value.
 
 ## Recently Archived
 
@@ -18,9 +18,10 @@ stabilizes.
 - P1-T3 — Dynamic Specifications and Decisions (PASS WITH REMOTE CI PENDING, 2026-07-10)
 - P1-T4 — Evaluation Context and Built-ins (PASS WITH REMOTE CI PENDING, 2026-07-10)
 - P2-T1 — Concurrency Contracts (PASS, 2026-07-10)
+- P2-T2 — Async Specifications (PASS, 2026-07-10)
 
 ## Next Step
 
-P2-T1 is complete. Execute P2-T2 through the complete Flow lifecycle. Keep the
-core runtime-neutral and dependency-conscious; resolve object-safety and Send
-semantics before implementation.
+P2-T2 is complete. Evaluate serialization and macros independently; retain
+only features with demonstrated ergonomic value and keep the core crate free
+of optional integration requirements by default.
