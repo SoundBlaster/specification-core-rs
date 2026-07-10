@@ -456,9 +456,10 @@ where
     ClockType: Clock,
 {
     fn is_satisfied_by(&self, context: &EvaluationContext<UserData>) -> bool {
-        context
-            .timestamp(&self.key)
-            .is_none_or(|timestamp| self.clock.now().saturating_sub(timestamp) >= self.duration)
+        context.timestamp(&self.key).is_none_or(|timestamp| {
+            let now = self.clock.now();
+            now >= timestamp && now - timestamp >= self.duration
+        })
     }
 }
 
@@ -692,6 +693,19 @@ mod tests {
         ));
         assert!(!specification.is_satisfied_by(
             &EvaluationContext::new(()).with_timestamp("last_login", Duration::from_secs(41))
+        ));
+    }
+
+    #[test]
+    fn cooldown_rejects_future_timestamps_even_at_zero_duration() {
+        let specification = Cooldown::new(
+            "last_login",
+            Duration::ZERO,
+            FixedClock::new(Duration::from_secs(100)),
+        );
+
+        assert!(!specification.is_satisfied_by(
+            &EvaluationContext::new(()).with_timestamp("last_login", Duration::from_secs(101))
         ));
     }
 }
