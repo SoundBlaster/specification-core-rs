@@ -121,7 +121,7 @@ take precedence over source-level parity.
 - **Priority:** P1
 - **Dependencies:** P1-T3
 - **Parallelizable:** no
-- **Status:** INPROGRESS
+- **Status:** Complete
 - **Acceptance Criteria:**
   - User data is generic rather than based on unbounded runtime downcasting
   - Built-in specifications are deterministic under an injected clock/context
