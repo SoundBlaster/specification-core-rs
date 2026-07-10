@@ -1,14 +1,15 @@
-# Next Task: P3-T3 — Publish 0.1.0
+# Next Step: Publish 0.1.0
 
 **Priority:** P1
 **Phase:** Compatibility and Release
 **Effort:** High
 **Dependencies:** P2-T2, P3-T2
-**Status:** INPROGRESS
+**Status:** Awaiting maintainer confirmation
 
 ## Description
 
-Validate packaging and prepare the first public crate release.
+Release preparation is complete. Publish the prepared 0.1.0 crates only after
+explicit maintainer confirmation.
 
 ## Recently Archived
 
@@ -21,8 +22,10 @@ Validate packaging and prepare the first public crate release.
 - P2-T3 — Serialization and Macros Evaluation (PASS, 2026-07-10)
 - P3-T1 — Cross-language Conformance Fixtures (PASS, 2026-07-10)
 - P3-T2 — Documentation Completion and Benchmarks (PASS, 2026-07-10)
+- P3-T3 — Publish 0.1.0 (PASS — RELEASE PREPARATION COMPLETE, 2026-07-10)
 
 ## Next Step
 
-P3-T3 is active. Prepare the 0.1.0 release gate. Publishing, tags, and the
-GitHub Release require explicit confirmation after preparation is complete.
+After explicit confirmation, publish `specification-core`,
+`specification-core-serde`, and `specification-core-macros` in that order,
+then create tag `v0.1.0` and its GitHub Release.
