@@ -43,3 +43,4 @@
 | 2026-07-10 | P1-T3 | Archived Dynamic Specifications and Decisions (PASS WITH REMOTE CI PENDING) |
 | 2026-07-10 | P1-T3 | Archived REVIEW_p1_t3_dynamic_decisions report (FOLLOW-UP skipped) |
 | 2026-07-10 | P1-T4 | Archived Evaluation Context and Built-ins (PASS WITH REMOTE CI PENDING) |
+| 2026-07-10 | P1-T4 | Archived REVIEW_p1_t4_context_builtins report (FOLLOW-UP skipped) |
