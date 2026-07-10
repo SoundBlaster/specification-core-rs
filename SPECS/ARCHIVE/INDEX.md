@@ -37,3 +37,4 @@
 | 2026-07-10 | P1-T1 | Archived Bootstrap Rust Workspace (PASS WITH REMOTE CI PENDING) |
 | 2026-07-10 | P1-T1 | Archived REVIEW_p1_t1_workspace_ci report (FOLLOW-UP skipped) |
 | 2026-07-10 | P1-T2 | Archived Core Specification API (PASS WITH REMOTE CI PENDING) |
+| 2026-07-10 | P1-T2 | Archived REVIEW_p1_t2_core_specification_api report (FOLLOW-UP skipped) |
