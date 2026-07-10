@@ -34,6 +34,7 @@
 | [_Historical/REVIEW_p3_t1_conformance_fixtures.md](_Historical/REVIEW_p3_t1_conformance_fixtures.md) | Review report for P3-T1 (FOLLOW-UP skipped) |
 | [_Historical/REVIEW_p3_t2_documentation_benchmarks.md](_Historical/REVIEW_p3_t2_documentation_benchmarks.md) | Review report for P3-T2 (FOLLOW-UP skipped) |
 | [_Historical/REVIEW_p3_t3_release_preparation.md](_Historical/REVIEW_p3_t3_release_preparation.md) | Review report for P3-T3 (FOLLOW-UP skipped) |
+| [_Historical/REVIEW_p4_t1_documentation_editorial.md](_Historical/REVIEW_p4_t1_documentation_editorial.md) | Review report for P4-T1 (FOLLOW-UP skipped) |
 
 ## Archive Log
 
@@ -67,3 +68,4 @@
 | 2026-07-10 | P3-T3 | Archived Publish 0.1.0 (PASS — RELEASE PREPARATION COMPLETE) |
 | 2026-07-10 | P3-T3 | Archived REVIEW_p3_t3_release_preparation report (FOLLOW-UP skipped) |
 | 2026-07-10 | P4-T1 | Archived Documentation Editorial Rewrite (PASS) |
+| 2026-07-10 | P4-T1 | Archived REVIEW_documentation_editorial report (FOLLOW-UP skipped) |

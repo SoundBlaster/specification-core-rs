@@ -1,14 +1,11 @@
-# Next Step: Review Documentation Editorial Rewrite
+# Next Step: Select Post-release Improvement
 
-**Task ID:** P4-T1
-**Priority:** P1
-**Phase:** Documentation Editorial Quality
-**Status:** Archived — REVIEW pending
+**Status:** Awaiting task selection
 
 ## Description
 
-The documentation rewrite passed implementation validation and is archived.
-Run the structured Flow review, then archive the review artifact.
+P4-T1 passed implementation validation, structured review, and review archival.
+The next post-release improvement should be selected from the Workplan.
 
 ## Recently Archived
 
@@ -26,5 +23,4 @@ Run the structured Flow review, then archive the review artifact.
 
 ## Next Step
 
-Complete REVIEW, FOLLOW-UP (or explicitly skip it), and ARCHIVE-REVIEW for
-P4-T1 before selecting the next post-release improvement.
+Select the next post-release improvement through the Flow SELECT step.

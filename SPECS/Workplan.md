@@ -211,7 +211,7 @@ take precedence over source-level parity.
 - **Priority:** P1
 - **Dependencies:** P3-T3
 - **Parallelizable:** no
-- **Status:** INPROGRESS
+- **Status:** Complete
 - **Acceptance Criteria:**
   - Landing page and Getting Started describe the released 0.1.0 state without stale future-work claims
   - A single domain example explains static composition, dynamic dispatch, typed decisions, immutable context, and injected time
