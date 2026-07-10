@@ -12,7 +12,12 @@ keywords = ["business-rules", "domain-driven-design", "specification"]
 categories = ["development-tools", "rust-patterns"]
 
 [dev-dependencies]
+criterion = "0.5"
 serde_json = "1.0"
+
+[[bench]]
+name = "dispatch"
+harness = false
 
 [lints]
 workspace = true

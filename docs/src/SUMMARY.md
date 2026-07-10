@@ -17,6 +17,8 @@
 - [Async Specifications](guides/async.md)
 - [Serialization and Macros](guides/serialization-macros.md)
 - [Cross-language Conformance](guides/conformance.md)
+- [Decisions and Evaluation Context](guides/decisions-context.md)
+- [Benchmarks](guides/benchmarks.md)
 
 # Migration from Swift
 

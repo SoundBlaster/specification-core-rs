@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := check
 
-.PHONY: check fmt-check lint test doctest docs release package coverage miri
+.PHONY: check fmt-check lint test doctest docs release package coverage miri benchmark
 
 check: fmt-check lint test doctest docs release
 
@@ -32,4 +32,7 @@ coverage:
 
 miri:
 	cargo +nightly miri setup
-	cargo +nightly miri test --workspace --all-targets --all-features
+	cargo +nightly miri test --workspace --lib --tests --examples --all-features
+
+benchmark:
+	cargo bench -p specification-core --bench dispatch
