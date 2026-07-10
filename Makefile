@@ -25,7 +25,7 @@ release:
 	cargo build --workspace --release
 
 package:
-	cargo package -p specification-core --allow-dirty
+	cargo package -p specification-core --allow-dirty --locked
 
 coverage:
 	cargo llvm-cov --workspace --all-features --no-report
