@@ -4,7 +4,7 @@
 **Phase:** Extended Capabilities
 **Effort:** High
 **Dependencies:** P1-T4
-**Status:** Candidate
+**Status:** INPROGRESS
 
 ## Description
 
@@ -22,6 +22,7 @@ features with demonstrated ergonomic value.
 
 ## Next Step
 
-P2-T2 is complete. Evaluate serialization and macros independently; retain
-only features with demonstrated ergonomic value and keep the core crate free
-of optional integration requirements by default.
+P2-T2 is complete. Execute P2-T3 through the complete Flow lifecycle. Evaluate
+serialization and macros independently; retain only features with demonstrated
+ergonomic value and keep the core crate free of optional integration
+requirements by default.
