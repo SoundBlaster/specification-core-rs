@@ -234,3 +234,8 @@ take precedence over source-level parity.
 - **Status:** INPROGRESS
 - **Source:** BuildHunter issue 25, H2/H3
 - **Acceptance Criteria:** See SPECS/INPROGRESS/P4-T2_Indexed_Ordered_Decisions.md and ADR 0008.
+
+#### P4-T3: Static Keyed Decisions
+- **Status:** INPROGRESS
+- **Source:** BuildHunter issue 25, H5/H19
+- **Acceptance Criteria:** See SPECS/INPROGRESS/P4-T3_Static_Keyed_Decisions.md and ADR 0009.

@@ -31,6 +31,26 @@ cargo bench -p specification-core --bench indexed_decisions \
 Retain both files with the Rust version, target, CPU, power mode, and command.
 The run describes this workload only; it does not establish a general speedup.
 
+The `static_decisions` benchmark uses the actual macro crate and core
+specifications. It compares a handwritten dispatcher with a 14-key catalog and
+a catalog containing 214 keyed rules: 200 distinct always-false unrelated
+rules before the same 14 target rules. It checks every result and checksum
+outside timing, warms both paths, alternates their order across 25 rounds, and
+prints each raw sample as CSV:
+
+```sh
+mkdir -p /Volumes/FlashCard/specification-core-rs-static/benchmark-artifacts
+CARGO_TARGET_DIR=/Volumes/FlashCard/specification-core-rs-static \
+  cargo bench -p specification-core-macros --bench static_decisions \
+  > /Volumes/FlashCard/specification-core-rs-static/benchmark-artifacts/static-decisions.csv \
+  2> /Volumes/FlashCard/specification-core-rs-static/benchmark-artifacts/static-decisions-median.txt
+```
+
+Record the compiler, target, machine, power mode, and command beside both
+files. The handwritten dispatcher is a purpose-built comparator; these
+synthetic measurements do not establish behavior for an application's real
+catalog.
+
 CI runs this benchmark on Linux and macOS and validates its samples with
 `python3 scripts/check_indexed_performance.py target/benchmark-artifacts/indexed-decisions.csv`.
 The indexed 214-rule median must fit `2 × indexed 14-rule median + 20 ns +

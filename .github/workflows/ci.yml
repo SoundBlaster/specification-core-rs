@@ -111,6 +111,55 @@ jobs:
           if-no-files-found: error
           retention-days: 14
 
+  keyed-static-performance:
+    name: Keyed static decision performance (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install stable Rust toolchain
+        shell: bash
+        run: |
+          rustup toolchain install stable --profile minimal
+          rustc +stable --version
+          cargo +stable --version
+      - name: Run Release parity-checked macro benchmark
+        shell: bash
+        run: |
+          mkdir -p target/benchmark-artifacts
+          {
+            echo "os=${{ matrix.os }}"
+            echo "commit=$(git rev-parse HEAD)"
+            echo "rustc=$(rustc +stable --version)"
+            echo "cargo=$(cargo +stable --version)"
+            if [[ -n "$(git status --porcelain)" ]]; then
+              echo "working_tree_dirty=true"
+            else
+              echo "working_tree_dirty=false"
+            fi
+            echo "harness_sha256=$(shasum -a 256 crates/specification-core-macros/benches/static_decisions.rs | cut -d ' ' -f 1)"
+          } > target/benchmark-artifacts/environment.txt
+          cargo +stable bench -p specification-core-macros --bench static_decisions --locked \
+            > target/benchmark-artifacts/static-decisions.csv \
+            2> target/benchmark-artifacts/static-decisions.log
+      - name: Validate samples and keyed scaling
+        shell: bash
+        run: |
+          python3 scripts/test_static_performance_report.py
+          python3 scripts/check_static_performance.py target/benchmark-artifacts/static-decisions.csv
+      - name: Publish raw benchmark samples and environment
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: keyed-static-performance-${{ matrix.os }}
+          path: target/benchmark-artifacts/
+          if-no-files-found: error
+          retention-days: 14
+
   docs:
     name: Documentation and doctests
     runs-on: ubuntu-latest
