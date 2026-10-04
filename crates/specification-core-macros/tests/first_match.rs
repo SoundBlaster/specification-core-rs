@@ -26,6 +26,56 @@ impl Specification<Facts> for OwnEnvironment {
 
 fn assert_send_sync<T: Send + Sync>(_: &T) {}
 
+trait KeyedContext {
+    fn key(&self) -> &str;
+}
+
+fn generic_invocation<C, D>(candidate: &C, decision: D) -> bool
+where
+    C: KeyedContext,
+{
+    let generated = first_match! {
+        context: C,
+        decision: D,
+        key: |context: &C| context.key(),
+        rules: [unkeyed(|_: &C| true, decision)]
+    };
+    generated.decide(candidate).is_some()
+}
+
+struct BorrowedFacts<'a>(&'a str);
+
+impl KeyedContext for BorrowedFacts<'_> {
+    fn key(&self) -> &str {
+        self.0
+    }
+}
+
+fn borrowed_lifetime_invocation<'a>(
+    candidate: &BorrowedFacts<'a>,
+    decision: NoCloneDecision,
+) -> bool {
+    let generated = first_match! {
+        context: BorrowedFacts<'a>,
+        decision: NoCloneDecision,
+        key: |context: &BorrowedFacts<'a>| context.0,
+        rules: [unkeyed(|_: &BorrowedFacts<'a>| true, decision)]
+    };
+    generated.decide(candidate).is_some()
+}
+
+#[test]
+fn invocations_inside_generic_and_lifetime_contexts_compile_and_dispatch() {
+    assert!(generic_invocation(
+        &BorrowedFacts("generic"),
+        NoCloneDecision("generic")
+    ));
+    assert!(borrowed_lifetime_invocation(
+        &BorrowedFacts("borrowed"),
+        NoCloneDecision("borrowed")
+    ));
+}
+
 #[test]
 fn mixed_keyed_unkeyed_alias_and_duplicate_rules_match_linear_order() {
     let generated = first_match! {

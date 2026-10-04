@@ -207,6 +207,8 @@ fn expand_first_match(input: FirstMatchInput) -> syn::Result<proc_macro2::TokenS
     } = input;
     let evaluator_name = format_ident!("__StaticFirstMatch");
     let projection_type = format_ident!("__KeyProjection");
+    let context_type = format_ident!("__Context");
+    let decision_type = format_ident!("__Decision");
     let specification_types = (0..rules.len())
         .map(|index| format_ident!("__Specification{index}"))
         .collect::<Vec<_>>();
@@ -216,7 +218,14 @@ fn expand_first_match(input: FirstMatchInput) -> syn::Result<proc_macro2::TokenS
     let decision_fields = (0..rules.len())
         .map(|index| format_ident!("decision_{index}"))
         .collect::<Vec<_>>();
-    let mut generic_types = vec![projection_type.clone()];
+    // Local items cannot capture generic parameters or lifetimes from the
+    // surrounding function. Infer independent generated type parameters from
+    // the initializer instead.
+    let mut generic_types = vec![
+        context_type.clone(),
+        decision_type.clone(),
+        projection_type.clone(),
+    ];
     generic_types.extend(specification_types.iter().cloned());
 
     let mut keys = Vec::<LitStr>::new();
@@ -276,11 +285,11 @@ fn expand_first_match(input: FirstMatchInput) -> syn::Result<proc_macro2::TokenS
     let arms = keys.iter().map(emit_arm);
     let default_evaluations = unkeyed_indices.iter().copied().map(emit_rule);
     let specification_bounds = specification_types.iter().map(|specification_type| {
-        quote! { #specification_type: ::specification_core::Specification<#context> }
+        quote! { #specification_type: ::specification_core::Specification<#context_type> }
     });
     let projection_bound = quote! {
         #projection_type: for<'candidate> ::core::ops::Fn(
-            &'candidate #context
+            &'candidate #context_type
         ) -> &'candidate str
     };
     let rule_fields = (0..rules.len()).map(|index| {
@@ -289,7 +298,7 @@ fn expand_first_match(input: FirstMatchInput) -> syn::Result<proc_macro2::TokenS
         let decision_field = &decision_fields[index];
         quote! {
             #specification_field: #specification_type,
-            #decision_field: #decision,
+            #decision_field: #decision_type,
         }
     });
     let rule_initializers = rules.iter().enumerate().map(|(index, rule)| {
@@ -311,29 +320,30 @@ fn expand_first_match(input: FirstMatchInput) -> syn::Result<proc_macro2::TokenS
     });
 
     Ok(quote! {{
-        fn __require_key_projection<Projection>(projection: Projection) -> Projection
+        fn __require_key_projection<Projection, Context>(projection: Projection) -> Projection
         where
             Projection: for<'candidate> ::core::ops::Fn(
-                &'candidate #context
+                &'candidate Context
             ) -> &'candidate str,
         {
             projection
         }
 
         struct #evaluator_name<#(#generic_types),*> {
+            _context: ::core::marker::PhantomData<(fn(&#context_type), fn() -> #decision_type)>,
             key: #projection_type,
             #(#rule_fields)*
         }
 
-        impl<#(#generic_types),*> ::specification_core::DecisionSpecification<#context>
+        impl<#(#generic_types),*> ::specification_core::DecisionSpecification<#context_type>
             for #evaluator_name<#(#generic_types),*>
         where
             #projection_bound,
             #(#specification_bounds,)*
         {
-            type Decision = #decision;
+            type Decision = #decision_type;
 
-            fn decide(&self, candidate: &#context) -> ::core::option::Option<&Self::Decision> {
+            fn decide(&self, candidate: &#context_type) -> ::core::option::Option<&Self::Decision> {
                 let key = (self.key)(candidate);
                 match key {
                     #(#arms,)*
@@ -346,7 +356,10 @@ fn expand_first_match(input: FirstMatchInput) -> syn::Result<proc_macro2::TokenS
         }
 
         #evaluator_name {
-            key: __require_key_projection(#key),
+            _context: ::core::marker::PhantomData::<(
+                fn(&#context), fn() -> #decision
+            )>,
+            key: __require_key_projection::<_, #context>(#key),
             #(#rule_initializers)*
         }
     }})
@@ -455,7 +468,8 @@ mod tests {
             .expect("valid rules should expand")
             .to_string();
 
-        assert!(expanded.contains("DecisionSpecification < Facts >"));
+        assert!(expanded.contains("DecisionSpecification < __Context >"));
+        assert!(expanded.contains("__require_key_projection :: < _ , Facts >"));
         assert!(expanded.contains("match key"));
         assert!(!expanded.contains("Box <"));
         assert!(expanded.contains("\"a\" =>"));
