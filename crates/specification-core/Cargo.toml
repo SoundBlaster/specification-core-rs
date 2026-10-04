@@ -19,5 +19,9 @@ serde_json = "1.0"
 name = "dispatch"
 harness = false
 
+[[bench]]
+name = "indexed_decisions"
+harness = false
+
 [lints]
 workspace = true

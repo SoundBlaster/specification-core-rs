@@ -77,6 +77,40 @@ jobs:
       - name: Compile benchmark target
         run: cargo +stable bench -p specification-core --bench dispatch --no-run --locked
 
+  indexed-performance:
+    name: Indexed decision performance (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install stable Rust
+        run: rustup toolchain install stable --profile minimal
+      - name: Run Release parity-checked catalog benchmark
+        shell: bash
+        run: |
+          mkdir -p target/benchmark-artifacts
+          rustc +stable --version > target/benchmark-artifacts/environment.txt
+          git rev-parse HEAD >> target/benchmark-artifacts/environment.txt
+          cargo +stable bench -p specification-core --bench indexed_decisions --locked \
+            > target/benchmark-artifacts/indexed-decisions.csv \
+            2> target/benchmark-artifacts/indexed-decisions.log
+      - name: Validate samples and catalog scaling
+        run: |
+          python3 scripts/test_indexed_performance_report.py
+          python3 scripts/check_indexed_performance.py target/benchmark-artifacts/indexed-decisions.csv
+      - name: Publish raw benchmark samples
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: indexed-performance-${{ matrix.os }}
+          path: target/benchmark-artifacts/
+          if-no-files-found: error
+          retention-days: 14
+
   docs:
     name: Documentation and doctests
     runs-on: ubuntu-latest
