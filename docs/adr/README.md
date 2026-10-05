@@ -30,3 +30,5 @@ or release process. Do not write one for a reversible local refactor.
 - [ADR-0005: Runtime-Neutral Async Specifications](0005-runtime-neutral-async-specifications.md)
 - [ADR-0006: Optional Serialization and Macro Boundaries](0006-optional-serialization-and-macro-boundaries.md)
 - [ADR-0007: Versioned Cross-language Conformance Fixtures](0007-versioned-cross-language-conformance-fixtures.md)
+- [ADR-0008: Index Ordered Decisions by Necessary Keys](0008-indexed-ordered-decisions.md)
+- [ADR-0009: Generate Static Keyed Decisions](0009-static-keyed-decisions.md)

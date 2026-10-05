@@ -16,7 +16,13 @@
 //! assert!(!eligible.is_satisfied_by(&70));
 //! ```
 
-use std::{collections::BTreeMap, future::Future, pin::Pin, sync::Arc, time::Duration};
+use std::{
+    collections::{BTreeMap, HashMap},
+    future::Future,
+    pin::Pin,
+    sync::Arc,
+    time::Duration,
+};
 
 /// A deterministic boolean rule over a borrowed candidate.
 ///
@@ -521,6 +527,140 @@ impl<T: ?Sized, Decision> DecisionSpecification<T> for FirstMatch<T, Decision> {
         self.rules.iter().find_map(|(specification, decision)| {
             specification.is_satisfied_by(candidate).then_some(decision)
         })
+    }
+}
+
+/// Ordered decisions indexed by caller-declared necessary string keys.
+///
+/// The key projection runs once for each call to [`DecisionSpecification::decide`].
+/// Evaluation considers only the matching key bucket and unkeyed rules, merging
+/// both groups in insertion order and stopping at the first match. Bucket
+/// lookup uses borrowed `str` access and index evaluation adds no allocation.
+///
+/// A keyed rule's key is a necessary condition: its specification must never
+/// match a candidate whose projected key differs from the registered key.
+/// This cannot be checked for arbitrary specifications. Rules without such a
+/// sound key must be registered with [`push_unkeyed`](Self::push_unkeyed).
+///
+/// The stored specifications require `Send + Sync`, so a completed index can
+/// be shared by worker threads whenever its decisions are also `Sync`.
+///
+/// ```
+/// use specification_core::{DecisionSpecification, IndexedFirstMatch};
+///
+/// struct File<'a> { name: &'a str, executable: bool }
+/// let mut routes = IndexedFirstMatch::new(|file: &File<'_>| file.name);
+/// routes.push_keyed(
+///     "Cargo.toml",
+///     |file: &File<'_>| file.name == "Cargo.toml" && file.executable,
+///     "manifest",
+/// );
+/// routes.push_unkeyed(|file: &File<'_>| file.name.ends_with(".lock"), "lockfile");
+///
+/// let manifest = File { name: "Cargo.toml", executable: true };
+/// let lock = File { name: "Cargo.lock", executable: false };
+/// assert_eq!(routes.decide(&manifest), Some(&"manifest"));
+/// assert_eq!(routes.decide(&lock), Some(&"lockfile"));
+/// assert!(routes.may_match("Cargo.lock"));
+/// ```
+pub struct IndexedFirstMatch<T: ?Sized, Decision> {
+    key_of: Arc<dyn for<'candidate> Fn(&'candidate T) -> &'candidate str + Send + Sync>,
+    rules: Vec<(SharedSpecification<T>, Decision)>,
+    buckets: HashMap<String, Vec<usize>>,
+    unkeyed: Vec<usize>,
+}
+
+impl<T: ?Sized, Decision> IndexedFirstMatch<T, Decision> {
+    /// Creates an empty index using a borrowed string-key projection.
+    ///
+    /// The projection must be stable for the candidate during one evaluation.
+    pub fn new<Projection>(key_of: Projection) -> Self
+    where
+        Projection: for<'candidate> Fn(&'candidate T) -> &'candidate str + Send + Sync + 'static,
+    {
+        Self {
+            key_of: Arc::new(key_of),
+            rules: Vec::new(),
+            buckets: HashMap::new(),
+            unkeyed: Vec::new(),
+        }
+    }
+
+    /// Adds a rule to the bucket for its necessary key.
+    ///
+    /// The specification must return `true` only for candidates whose
+    /// projected key equals `key`. Duplicate keys are supported and retain
+    /// insertion order.
+    pub fn push_keyed<Concrete>(
+        &mut self,
+        key: impl Into<String>,
+        specification: Concrete,
+        decision: Decision,
+    ) where
+        Concrete: Specification<T> + Send + Sync + 'static,
+    {
+        let index = self.rules.len();
+        self.rules
+            .push((SharedSpecification::new(specification), decision));
+        self.buckets.entry(key.into()).or_default().push(index);
+    }
+
+    /// Adds a rule considered for every candidate, in insertion order.
+    pub fn push_unkeyed<Concrete>(&mut self, specification: Concrete, decision: Decision)
+    where
+        Concrete: Specification<T> + Send + Sync + 'static,
+    {
+        let index = self.rules.len();
+        self.rules
+            .push((SharedSpecification::new(specification), decision));
+        self.unkeyed.push(index);
+    }
+
+    /// Returns whether a candidate with `key` could match.
+    ///
+    /// This is conservative: if any unkeyed rules are registered, this returns
+    /// `true` even when the keyed bucket is absent. It does not evaluate rules.
+    pub fn may_match(&self, key: &str) -> bool {
+        !self.unkeyed.is_empty() || self.buckets.contains_key(key)
+    }
+}
+
+impl<T: ?Sized, Decision> DecisionSpecification<T> for IndexedFirstMatch<T, Decision> {
+    type Decision = Decision;
+
+    fn decide(&self, candidate: &T) -> Option<&Decision> {
+        let key = (self.key_of)(candidate);
+        let keyed = self.buckets.get(key).map(Vec::as_slice).unwrap_or(&[]);
+        let mut keyed_index = 0;
+        let mut unkeyed_index = 0;
+
+        while keyed_index < keyed.len() || unkeyed_index < self.unkeyed.len() {
+            let rule_index = match (keyed.get(keyed_index), self.unkeyed.get(unkeyed_index)) {
+                (Some(&keyed_rule), Some(&unkeyed_rule)) if keyed_rule < unkeyed_rule => {
+                    keyed_index += 1;
+                    keyed_rule
+                }
+                (Some(_), Some(&unkeyed_rule)) => {
+                    unkeyed_index += 1;
+                    unkeyed_rule
+                }
+                (Some(&keyed_rule), None) => {
+                    keyed_index += 1;
+                    keyed_rule
+                }
+                (None, Some(&unkeyed_rule)) => {
+                    unkeyed_index += 1;
+                    unkeyed_rule
+                }
+                (None, None) => unreachable!("loop condition guarantees an available rule"),
+            };
+
+            let (specification, decision) = &self.rules[rule_index];
+            if specification.is_satisfied_by(candidate) {
+                return Some(decision);
+            }
+        }
+        None
     }
 }
 

@@ -68,3 +68,84 @@ let selected = route.decide_or(&context, &fallback);
 
 The decision is borrowed from the `FirstMatch` value. This avoids cloning a
 large decision payload and makes its lifetime visible in the type system.
+
+## Indexed decisions for keyed catalogs
+
+For a large catalog with exact string keys, `IndexedFirstMatch` can skip rules
+whose declared key does not match the candidate. Its key projection runs once
+per `decide` call, and lookup borrows the candidate's string without allocating.
+The index merges the matching bucket with unkeyed rules in insertion order, so
+earlier fallbacks retain priority. This excerpt is illustrative because mdBook
+runs guide code blocks without the crate dependency; the complete version is a
+runnable Cargo example linked below:
+
+```rust,ignore
+use specification_core::{DecisionSpecification, IndexedFirstMatch};
+
+struct Artifact<'a> { name: &'a str, is_directory: bool }
+let mut classifier = IndexedFirstMatch::new(|item: &Artifact<'_>| item.name);
+classifier.push_keyed("target", |item: &Artifact<'_>| item.name == "target" && item.is_directory, "rust-build");
+classifier.push_unkeyed(|item: &Artifact<'_>| item.name.ends_with(".egg-info"), "python-metadata");
+
+let item = Artifact { name: "target", is_directory: true };
+assert_eq!(classifier.decide(&item), Some(&"rust-build"));
+assert!(classifier.may_match("target"));
+```
+
+Register a rule as keyed only when that key is a necessary condition: the
+predicate must never match a candidate with another projected key. Arbitrary
+closures cannot be inspected to prove this. Put rules without a sound key in
+the unkeyed list. Those rules are checked for every candidate and make
+`may_match` return `true` for any key. Duplicate keys are allowed; large
+buckets and unkeyed rules are scanned in insertion order. The index requires
+`Send + Sync` specifications and can be shared across worker threads when the
+decisions are `Sync`. See the runnable
+[`indexed_decisions.rs`](https://github.com/SoundBlaster/specification-core-rs/blob/main/crates/specification-core/examples/indexed_decisions.rs).
+
+## Static keyed decisions
+
+For a rule catalog known at compile time, the optional
+`specification-core-macros` crate provides `first_match!`. It generates a
+concrete evaluator that implements `DecisionSpecification<Context>` and stores
+the declared specification and decision values in typed fields; its result is
+borrowed from the evaluator. The projection runs once per call. Generated
+dispatch uses a `match` on the borrowed key and
+checks the matching keyed rules together with every unkeyed rule in declaration
+order:
+
+```rust,ignore
+use specification_core::{DecisionSpecification, Specification};
+use specification_core_macros::first_match;
+
+struct Facts { name: String, directory: bool, parent_cargo: bool, enabled: bool }
+struct Enabled;
+impl Specification<Facts> for Enabled {
+    fn is_satisfied_by(&self, facts: &Facts) -> bool { facts.enabled }
+}
+
+let route = first_match! {
+    context: Facts,
+    decision: u16,
+    key: |facts: &Facts| facts.name.as_str(),
+    rules: [
+        keyed(["target", "target-alias"], |facts: &Facts| {
+            (facts.name == "target" || facts.name == "target-alias")
+                && facts.directory && facts.parent_cargo
+        }, 1),
+        unkeyed(Enabled, 2),
+    ]
+};
+```
+
+This excerpt is illustrative because mdBook code blocks do not depend on the
+optional macro crate. The crate's integration suite compiles the DSL against
+the real `Specification` and `DecisionSpecification` APIs:
+[`first_match.rs`](https://github.com/SoundBlaster/specification-core-rs/blob/main/crates/specification-core-macros/tests/first_match.rs).
+
+Register a rule as keyed only when its specification cannot match a different
+projected key. The macro cannot establish that contract from an arbitrary
+closure. Use one or more string literal aliases for a keyed rule; duplicate
+keys are valid. Unkeyed rules are checked for every key, and priority always
+follows declaration order. Unknown keys run only the unkeyed rules. Choose
+`IndexedFirstMatch` when the catalog must be assembled dynamically; the macro
+is for rule sets fixed in source.

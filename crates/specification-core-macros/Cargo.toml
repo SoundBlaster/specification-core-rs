@@ -22,5 +22,9 @@ syn = { version = "2", features = ["full"] }
 [dev-dependencies]
 specification-core = { path = "../specification-core" }
 
+[[bench]]
+name = "static_decisions"
+harness = false
+
 [lints]
 workspace = true

@@ -229,3 +229,13 @@ take precedence over source-level parity.
 - **INPROGRESS** — task is selected and being executed through Flow
 - **Blocked** — task cannot proceed until its blocker is resolved
 - **Complete** — task passed validation and was archived
+
+#### P4-T2: Indexed Ordered Decisions
+- **Status:** INPROGRESS
+- **Source:** BuildHunter issue 25, H2/H3
+- **Acceptance Criteria:** See SPECS/INPROGRESS/P4-T2_Indexed_Ordered_Decisions.md and ADR 0008.
+
+#### P4-T3: Static Keyed Decisions
+- **Status:** INPROGRESS
+- **Source:** BuildHunter issue 25, H5/H19
+- **Acceptance Criteria:** See SPECS/INPROGRESS/P4-T3_Static_Keyed_Decisions.md and ADR 0009.
